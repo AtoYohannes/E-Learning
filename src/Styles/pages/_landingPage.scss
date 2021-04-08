@@ -2,12 +2,87 @@
   .welcomeContainer {
     background: rgb(18, 89, 143);
     color: $light;
-    padding: 0 10%;
+    padding: 10% 10% 0px;
     font-weight: bold;
-    padding-top: 40px;
   }
   .myCoursesContainer {
-    padding: 50px;
-    background: $dark;
+    padding: 0 50px;
+    background: $background;
+    height: auto;
+    h5 {
+      font-weight: bold;
+      color: $dark;
+    }
+    .nav-item {
+      margin: 0px 20% 0px 10px;
+      color: $dark;
+      .nav-link {
+        display: flex;
+        align-items: center;
+        &.activepageTab {
+          cursor: pointer;
+          padding-left: 25px;
+          padding-right: 25px;
+          border-bottom: 4px solid $secondary;
+          display: inline-flex;
+          transition: 0.3s ease-in;
+          text-transform: uppercase;
+        }
+        &.notactivepageTab {
+          transition: 0.3s ease-in;
+          text-transform: uppercase;
+          padding-left: 25px;
+          padding-right: 25px;
+        }
+        &.notactivepageTab:hover {
+          cursor: pointer;
+          border-bottom: 4px solid $secondary;
+
+          transition: 0.18s ease-in;
+        }
+      }
+    }
   }
+}
+
+.coursesCardContainer {
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 4px darken($color: #d4d4d4, $amount: 5);
+
+  .coursesCard {
+    border-top: 20px solid $secondary;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0px 4px 4px darken($color: #d4d4d4, $amount: 5);
+
+    header {
+      font-size: 20px;
+      font-weight: bolder;
+      color: $secondary;
+      margin-bottom: 20px;
+    }
+    tag {
+      border: 1px solid $secondary;
+      padding: 4px 30px;
+      font-size: 11px;
+      border-radius: 40px;
+      font-weight: bolder;
+      color: $secondary;
+    }
+  }
+  .courseFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    h6 {
+      font-weight: bolder;
+      color: #929292;
+    }
+  }
+}
+
+.popularCoursesContainer {
+  background: $secondary;
 }

@@ -28,12 +28,12 @@ class MainLayout extends React.Component {
 
   onScroll = () => {
     const scrollTop = this.myRef.current.scrollTop;
-    if (scrollTop > 160) {
+    if (scrollTop > 10) {
       this.setState({
         scrolled: true,
       });
     }
-    if (scrollTop < 160) {
+    if (scrollTop < 10) {
       this.setState({
         scrolled: false,
       });
@@ -63,7 +63,10 @@ class MainLayout extends React.Component {
           <SlidingDrawer show={this.state.drawerOpen} type={this.state.type} />
           {backdrop}
           <Content fluid>
-            <Header toggle={this.drawerToggleClickHandler} scrolled={this.state.scrolled} />
+            <Header
+              toggle={this.drawerToggleClickHandler}
+              scrolled={this.state.scrolled}
+            />
             <div className="cr-app-body">{children}</div>
             <div className="mt-5">
               <Footer />

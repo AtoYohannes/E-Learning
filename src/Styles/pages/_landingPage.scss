@@ -1,0 +1,13 @@
+.landingPageContainer {
+  .welcomeContainer {
+    background: rgb(18, 89, 143);
+    color: $light;
+    padding: 0 10%;
+    font-weight: bold;
+    padding-top: 40px;
+  }
+  .myCoursesContainer {
+    padding: 50px;
+    background: $dark;
+  }
+}

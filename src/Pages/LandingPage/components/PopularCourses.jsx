@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { CardBody, CardHeader, Col, Row } from "reactstrap";
 import CoursesCardTwo from "../../../Components/Card/CoursesCardTwo";
+import routes from "../../../Config/routes";
 
 const popularCourses = [{}, {}, {}, {}];
 
@@ -19,6 +21,9 @@ const PopularCourses = () => {
           ))}
         </Row>
       </CardBody>
+      <Col align="center">
+        <Link to={{ pathname: routes.allCourses }}>See All</Link>
+      </Col>
     </div>
   );
 };

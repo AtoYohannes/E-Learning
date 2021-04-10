@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Button,
-  Card,
-  CardText,
-  CardTitle,
   Col,
   Nav,
   NavItem,
@@ -14,6 +10,7 @@ import {
   TabPane,
 } from "reactstrap";
 import CoursesCard from "../../../Components/Card/CoursesCard";
+import routes from "../../../Config/routes";
 
 const MyCourses = (props) => {
   const [activeTab, setActiveTab] = useState("1");
@@ -70,46 +67,36 @@ const MyCourses = (props) => {
             ))}
           </Row>
           <Col className="mt-2" align="center">
-            <Link>See all Courses</Link>
+            <Link to={{ pathname: routes.allCourses }}>See all Courses</Link>
           </Col>
         </TabPane>
         <TabPane tabId="2">
+          <h5>Your Enrolled Courses</h5>
+          <hr />
           <Row>
-            <Col sm={12}>
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
-            <Col sm={12}>
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
+            {courses.map((course, index) => (
+              <Col md={6} sm={12}>
+                <CoursesCard index={index} course={course} />
+              </Col>
+            ))}
           </Row>
+          <Col className="mt-2" align="center">
+            <Link>See all Enrolled Courses</Link>
+          </Col>
         </TabPane>
         <TabPane tabId="3">
+          <h5>Completed Courses</h5>
+          <hr />
           <Row>
-            <Col sm={12}>
-              <Card body>
-                <CardTitle>Special Title Treatment</CardTitle>
-                <CardText>
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </CardText>
-                <Button>Go somewhere</Button>
-              </Card>
-            </Col>
+            {courses.map((course, index) => (
+              <Col md={6} sm={12}>
+                <CoursesCard index={index} course={course} />
+              </Col>
+            ))}
           </Row>
+          <Col className="mt-2" align="center">
+            <Link to={{ pathname: routes.allCourses }}>See All</Link>
+          </Col>
         </TabPane>
       </TabContent>
     </div>

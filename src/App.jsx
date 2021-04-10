@@ -7,6 +7,9 @@ import { Spinner } from "reactstrap";
 import { MainLayout } from "./Components/Layout";
 
 const LandingPage = React.lazy(() => import("./Pages/LandingPage"));
+const SingleCourse = React.lazy(() => import("./Pages/SingleCourse"));
+const Categories = React.lazy(() => import("./Pages/Categories"));
+const AllCourses = React.lazy(() => import("./Pages/AllCourses"));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split("/").pop()}`;
@@ -16,12 +19,6 @@ function App() {
   return (
     <BrowserRouter basename={getBasename()}>
       <Switch>
-        {/* <LayoutRoute
-              exactgit
-              path={routes.signIn}
-              layout={EmptyLayout}
-              component={SignInPage}
-            /> */}
         <React.Fragment>
           <MainLayout>
             <React.Suspense
@@ -32,6 +29,13 @@ function App() {
               }
             >
               <Route exact path={routes.homePage} component={LandingPage} />
+              <Route
+                exact
+                path={routes.singleCourse}
+                component={SingleCourse}
+              />
+              <Route exact path={routes.allCategories} component={Categories} />
+              <Route exact path={routes.allCourses} component={AllCourses} />
             </React.Suspense>
           </MainLayout>
         </React.Fragment>

@@ -1,5 +1,5 @@
 import React from "react";
-import { MyCourses, PopularCourses, Welcome } from "./components";
+import { Categories, MyCourses, PopularCourses, Welcome } from "./components";
 
 const LandingPage = () => {
   return (
@@ -7,6 +7,7 @@ const LandingPage = () => {
       <Welcome />
       <MyCourses />
       <PopularCourses />
+      <Categories />
     </div>
   );
 };

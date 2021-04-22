@@ -1,27 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { CardBody, CardHeader, Col, Row } from "reactstrap";
 import CategoriesCard from "../../../Components/Card/CategoriesCard";
+import routes from "../../../Config/routes";
 
-const categories = [
-  {
-    color: "light",
-  },
-  {
-    color: "primary",
-  },
-  {
-    color: "success",
-  },
-  {
-    color: "danger",
-  },
-  {
-    color: "warning",
-  },
-  {
-    color: "info",
-  },
-];
+const categories = [{}, {}, {}, {}, {}, {}];
 
 const Categories = () => {
   return (
@@ -38,6 +21,9 @@ const Categories = () => {
           ))}
         </Row>
       </CardBody>
+      <Col align="center">
+        <Link to={{ pathname: routes.allCategories }}>See All Categories</Link>
+      </Col>
     </div>
   );
 };

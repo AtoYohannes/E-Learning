@@ -96,78 +96,6 @@
     width: 90%;
     padding: 30px;
     border: none;
-
-    .courseTwoCard {
-      // box-shadow: 4px 4px 4px darken($color: #d4d4d4, $amount: 5);
-      margin-bottom: 40px;
-
-      img {
-        height: 250px;
-        object-fit: cover;
-        border: none;
-        transition: 0.5s;
-      }
-      .imageOverlay {
-        display: flex;
-        transition: 0.5s;
-        border: none;
-        display: flex;
-        flex-direction: column;
-
-        .title {
-          font-size: 0.01px;
-          color: $light;
-          transition: 0.5s;
-          font-weight: bold;
-        }
-        .courseBy {
-          font-size: 0.01px;
-          color: $light;
-          transition: 0.5s;
-          font-weight: bold;
-        }
-        .teacher {
-          font-size: 0.01px;
-          color: $light;
-          transition: 0.5s;
-          font-weight: bold;
-        }
-      }
-    }
-    .courseTwoCard:hover {
-      border: none;
-      img {
-        height: 250px;
-        object-fit: cover;
-        border: none;
-      }
-      .imageOverlay:hover {
-        display: flex;
-        background-color: $secondary;
-        opacity: 0.9;
-        transition: 0.5s;
-        .title {
-          font-size: 30px;
-          color: $light;
-          transition: 0.3s;
-          font-weight: bold;
-        }
-        .courseBy {
-          font-size: 10px;
-          color: $light;
-          transition: 0.5s;
-          font-weight: bold;
-          margin-top: 40px;
-        }
-        .teacher {
-          font-size: 10px;
-          color: $light;
-          transition: 0.5s;
-          font-weight: bold;
-          margin-top: 10px;
-        }
-      }
-    }
   }
 }
 
@@ -180,31 +108,104 @@
     margin: 0 auto;
     width: 95%;
   }
-  .categories {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: $light;
+  border: none;
+  margin-bottom: 30px;
+  box-shadow: 4px 4px 4px darken($color: #d4d4d4, $amount: 5);
+  transition: 0.5s;
+  .header {
     background: $light;
     border: none;
-    margin-bottom: 30px;
-    box-shadow: 4px 4px 4px darken($color: #d4d4d4, $amount: 5);
+    padding: 30px 20px;
+  }
+}
+.categories:hover {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: $light;
+  margin-bottom: 30px;
+  box-shadow: 5px 10px 10px darken($color: #d4d4d4, $amount: 5);
+  .header {
+    background: $light;
+    padding: 30px 20px;
+  }
+}
+
+.courseTwoCard {
+  // box-shadow: 4px 4px 4px darken($color: #d4d4d4, $amount: 5);
+  margin-bottom: 40px;
+
+  img {
+    height: 250px;
+    object-fit: cover;
+    border: none;
     transition: 0.5s;
-    .header {
-      background: $light;
-      border: none;
-      padding: 30px 20px;
+  }
+  .imageOverlay {
+    display: flex;
+    transition: 0.5s;
+    border: none;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-size: 0.01px;
+      color: $light;
+      transition: 0.5s;
+      font-weight: bold;
+    }
+    .courseBy {
+      font-size: 0.01px;
+      color: $light;
+      transition: 0.5s;
+      font-weight: bold;
+    }
+    .teacher {
+      font-size: 0.01px;
+      color: $light;
+      transition: 0.5s;
+      font-weight: bold;
     }
   }
-  .categories:hover {
+}
+.courseTwoCard:hover {
+  border: none;
+  img {
+    height: 250px;
+    object-fit: cover;
+    border: none;
+  }
+  .imageOverlay:hover {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background: $light;
-    margin-bottom: 30px;
-    box-shadow: 5px 10px 10px darken($color: #d4d4d4, $amount: 5);
-    .header {
-      background: $light;
-      padding: 30px 20px;
+    background-color: $secondary;
+    opacity: 0.9;
+    transition: 0.5s;
+    .title {
+      font-size: 30px;
+      color: $light;
+      transition: 0.3s;
+      font-weight: bold;
+    }
+    .courseBy {
+      font-size: 10px;
+      color: $light;
+      transition: 0.5s;
+      font-weight: bold;
+      margin-top: 40px;
+    }
+    .teacher {
+      font-size: 10px;
+      color: $light;
+      transition: 0.5s;
+      font-weight: bold;
+      margin-top: 10px;
     }
   }
 }

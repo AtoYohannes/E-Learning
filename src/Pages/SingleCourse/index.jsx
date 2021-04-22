@@ -1,9 +1,11 @@
 import React from "react";
+import { Body, Header } from "./components";
 
 const SingleCourse = () => {
   return (
-    <div>
-      <h1>Single Course</h1>
+    <div className="singleCourseContainer">
+      <Header />
+      <Body />
     </div>
   );
 };

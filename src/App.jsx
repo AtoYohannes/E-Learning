@@ -8,6 +8,9 @@ import { MainLayout } from "./Components/Layout";
 
 const LandingPage = React.lazy(() => import("./Pages/LandingPage"));
 const SingleCourse = React.lazy(() => import("./Pages/SingleCourse"));
+const SingleCourseInsider = React.lazy(() =>
+  import("./Pages/SingleCourseInsider")
+);
 const Categories = React.lazy(() => import("./Pages/Categories"));
 const AllCourses = React.lazy(() => import("./Pages/AllCourses"));
 
@@ -36,6 +39,11 @@ function App() {
               />
               <Route exact path={routes.allCategories} component={Categories} />
               <Route exact path={routes.allCourses} component={AllCourses} />
+              <Route
+                exact
+                path={routes.singleCourseInsider}
+                component={SingleCourseInsider}
+              />
             </React.Suspense>
           </MainLayout>
         </React.Fragment>

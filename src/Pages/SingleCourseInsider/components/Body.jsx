@@ -1,8 +1,6 @@
 import React from "react";
-import { MdVideoCall, MdReceipt, MdPictureAsPdf, MdHelp } from "react-icons/md";
-import { Card, Row, Col, Button } from "reactstrap";
-import InstructorImage from "../../../Assets/Nunu.jpg";
-import Avatar from "../../../Components/Avatar";
+import { MdHelp, MdPictureAsPdf, MdReceipt, MdVideoCall } from "react-icons/md";
+import { Card, Col, Row } from "reactstrap";
 
 const chapters = [
   { type: "video" },
@@ -14,7 +12,7 @@ const chapters = [
 
 const Body = () => {
   return (
-    <div className="singleCourseBodyContainer">
+    <div className="singleCourseBodyInsiderContainer">
       <h3>Course Insights</h3>
       <hr />
       <p>
@@ -68,15 +66,6 @@ const Body = () => {
           );
         })}
       </Row>
-      <h3>Your Instructor</h3>
-      <hr />
-      <div className="instructorContainer">
-        <Avatar size={200} src={InstructorImage} />
-        <h5>Yohannes Berhanu</h5>
-        <h7>PHD in Machine Learning</h7>
-        <hr />
-        <Button>Enroll Now</Button>
-      </div>
     </div>
   );
 };

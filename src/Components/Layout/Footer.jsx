@@ -3,7 +3,14 @@ import { Navbar, Nav } from "reactstrap";
 
 const Footer = () => {
   return (
-    <Navbar fixed="bottom" align="right">
+    <Navbar className="footerContainer">
+      <Nav className="footerTexts">2020, Project Title</Nav>
+      <Nav className="footerTexts">2020, Project Title</Nav>
+      <Nav className="footerTexts">2020, Project Title</Nav>
+      <Nav className="footerTexts">2020, Project Title</Nav>
+      <Nav className="footerTexts">2020, Project Title</Nav>
+      <Nav className="footerTexts">2020, Project Title</Nav>
+      <Nav className="footerTexts">2020, Project Title</Nav>
       <Nav className="footerTexts">2020, Project Title</Nav>
     </Navbar>
   );

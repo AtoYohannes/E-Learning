@@ -11,7 +11,7 @@ const CoursesCardTwo = () => {
         <CardImg src={Image} />
         <CardImgOverlay className="imageOverlay">
           <div className="title">Intoduction to Machine Learning</div>
-          <div className="courseBy">University Of Michigan</div>
+          <div className="courseBy">Addis Ababa University</div>
           <div className="teacher">Yohannes Berhanu</div>
         </CardImgOverlay>
       </Card>

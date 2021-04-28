@@ -1,23 +1,29 @@
 .footerContainer {
-    padding: 30px;
+  padding: 20px 300px;
+  background: $secondary;
+  color: $light;
+  display: flex;
+  flex-direction: row;
 }
 
 .footerContents {
-    align-self: center;
+  align-self: center;
 }
 
 .footerIcon {
-    height: 60px;
-    flex-direction: column;
-    margin-top: 30px;
-    align-self: center;
-    width: 100%
+  height: 60px;
+  flex-direction: column;
+  margin-top: 30px;
+  align-self: center;
+  width: 100%;
 }
 
 .footerTexts {
-    transition: transform .2s;
-
+  transition: transform 0.2s;
+  margin: 10px 30px;
+  color: $light;
 }
 .footerTexts:hover {
-    transform: scale(1.010);
+  transform: scale(1.01);
+  color: $light;
 }

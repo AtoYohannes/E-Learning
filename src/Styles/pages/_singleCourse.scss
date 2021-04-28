@@ -60,6 +60,45 @@
       }
     }
   }
+
+  .singleCourseInsiderContainer {
+    background-color: #fff;
+    height: 100vh;
+    border: none;
+    padding: 10px 0px;
+    h5 {
+      padding-left: 10px;
+    }
+    hr {
+      margin-bottom: 0px;
+    }
+    .contents {
+      overflow-y: scroll;
+      padding: 10px 20px;
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        border: none;
+        padding: 15px 10px;
+        margin-bottom: 20px;
+        box-shadow: 4px 4px 10px darken($color: #ddd, $amount: 4);
+
+        icon {
+          margin-right: 10px;
+          color: $secondary;
+        }
+        h6 {
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+  .singleCourseBodyInsiderContainer {
+    height: 100vh;
+    padding-right: 20px;
+    overflow: scroll;
+  }
 }
 
 @keyframes zoominoutsinglefeatured {

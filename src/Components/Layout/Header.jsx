@@ -21,8 +21,14 @@ import {
   MdPanoramaFishEye,
   MdQuestionAnswer,
   MdPageview,
+  MdPersonPin,
+  MdInsertChart,
+  MdMessage,
+  MdSettingsApplications,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Avatar from "../Avatar";
+import UserCard from "../Card/UserCard";
 
 const bem = bn.create("header");
 
@@ -33,6 +39,7 @@ class Header extends React.Component {
       isMobile: false,
       isMobilePopoverOpen: false,
       isAboutPopoverOpen: false,
+      isOpenUserCardPopover: false,
     };
     this.updatePredicate = this.updatePredicate.bind(this);
   }
@@ -54,6 +61,11 @@ class Header extends React.Component {
   toggleAboutPopover = () => {
     this.setState({
       isAboutPopoverOpen: !this.state.isAboutPopoverOpen,
+    });
+  };
+  toggleUserCardPopover = () => {
+    this.setState({
+      isOpenUserCardPopover: !this.state.isOpenUserCardPopover,
     });
   };
 
@@ -156,6 +168,76 @@ class Header extends React.Component {
                     title="SignIn"
                   />
                 </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink id="Popover2">
+                  <Avatar
+                    onClick={this.toggleUserCardPopover}
+                    className="can-click"
+                  />
+                </NavLink>
+                <Popover
+                  placement="bottom-end"
+                  isOpen={this.state.isOpenUserCardPopover}
+                  toggle={this.toggleUserCardPopover}
+                  target="Popover2"
+                  className="p-0 border-0"
+                  style={{ minWidth: 250 }}
+                >
+                  <PopoverBody className="p-0 border-light">
+                    <UserCard
+                      title="Jane"
+                      subtitle="jane@jane.com"
+                      text="Last updated 3 mins ago"
+                      className="border-light"
+                    >
+                      <ListGroup flush>
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          className="border-light"
+                        >
+                          <MdPersonPin /> Profile
+                        </ListGroupItem>
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          className="border-light"
+                        >
+                          <MdInsertChart /> Stats
+                        </ListGroupItem>
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          className="border-light"
+                        >
+                          <MdMessage /> Messages
+                        </ListGroupItem>
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          className="border-light"
+                        >
+                          <MdSettingsApplications /> Settings
+                        </ListGroupItem>
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          className="border-light"
+                        >
+                          <MdHelp /> Help
+                        </ListGroupItem>
+                        <ListGroupItem
+                          tag="button"
+                          action
+                          className="border-light"
+                        >
+                          <MdExitToApp /> Signout
+                        </ListGroupItem>
+                      </ListGroup>
+                    </UserCard>
+                  </PopoverBody>
+                </Popover>
               </NavItem>
             </Nav>
           ) : (

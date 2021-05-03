@@ -1,6 +1,8 @@
 import { Button } from "reactstrap";
 import React from "react";
 import { MdApps, MdPerson } from "react-icons/md";
+import { Link } from "react-router-dom";
+import routes from "../../../Config/routes";
 
 const CourseHeader = () => {
   return (
@@ -9,8 +11,10 @@ const CourseHeader = () => {
       <div className="label">
         <h1>Introduction to Machine Learning</h1>
         <Button>
-          <MdApps className="mr-2" />
-          Enroll Now
+          <Link to={{ pathname: routes.singleCourseInsider }}>
+            <MdApps className="mr-2" />
+            Enroll Now
+          </Link>
         </Button>
       </div>
 

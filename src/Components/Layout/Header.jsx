@@ -1,34 +1,33 @@
 import React from "react";
 import {
+  MdExitToApp,
+  MdGroupAdd,
+  MdHelp,
+  MdInsertChart,
+  MdMessage,
+  MdPageview,
+  MdPanoramaFishEye,
+  MdPerson,
+  MdPersonPin,
+  MdQuestionAnswer,
+  MdReorder,
+} from "react-icons/md";
+import { Link } from "react-router-dom";
+import {
+  ListGroup,
+  ListGroupItem,
   Nav,
   Navbar,
   NavItem,
   NavLink,
   Popover,
   PopoverBody,
-  ListGroup,
-  ListGroupItem,
 } from "reactstrap";
-import bn from "../../utils/bemnames";
 import routes from "../../Config/routes";
-import { RenderButton } from "../MainRender";
-import {
-  MdReorder,
-  MdHelp,
-  MdExitToApp,
-  MdGroupAdd,
-  MdPerson,
-  MdPanoramaFishEye,
-  MdQuestionAnswer,
-  MdPageview,
-  MdPersonPin,
-  MdInsertChart,
-  MdMessage,
-  MdSettingsApplications,
-} from "react-icons/md";
-import { Link } from "react-router-dom";
+import bn from "../../utils/bemnames";
 import Avatar from "../Avatar";
 import UserCard from "../Card/UserCard";
+import { RenderButton } from "../MainRender";
 
 const bem = bn.create("header");
 
@@ -184,21 +183,23 @@ class Header extends React.Component {
                   className="p-0 border-0"
                   style={{ minWidth: 250 }}
                 >
-                  <PopoverBody className="p-0 border-light">
+                  <PopoverBody className="p-0 border-0">
                     <UserCard
-                      title="Jane"
-                      subtitle="jane@jane.com"
-                      text="Last updated 3 mins ago"
+                      title="Fasil Minale"
+                      subtitle="FasilMinale@gmail.com"
                       className="border-light"
                     >
                       <ListGroup flush>
-                        <ListGroupItem
-                          tag="button"
-                          action
-                          className="border-light"
-                        >
-                          <MdPersonPin /> Profile
-                        </ListGroupItem>
+                        <Link to={{ pathname: routes.profile }}>
+                          <ListGroupItem
+                            tag="button"
+                            action
+                            className="border-light"
+                          >
+                            <MdPersonPin /> Profile
+                          </ListGroupItem>
+                        </Link>
+
                         <ListGroupItem
                           tag="button"
                           action
@@ -212,27 +213,6 @@ class Header extends React.Component {
                           className="border-light"
                         >
                           <MdMessage /> Messages
-                        </ListGroupItem>
-                        <ListGroupItem
-                          tag="button"
-                          action
-                          className="border-light"
-                        >
-                          <MdSettingsApplications /> Settings
-                        </ListGroupItem>
-                        <ListGroupItem
-                          tag="button"
-                          action
-                          className="border-light"
-                        >
-                          <MdHelp /> Help
-                        </ListGroupItem>
-                        <ListGroupItem
-                          tag="button"
-                          action
-                          className="border-light"
-                        >
-                          <MdExitToApp /> Signout
                         </ListGroupItem>
                       </ListGroup>
                     </UserCard>

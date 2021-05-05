@@ -1,14 +1,8 @@
 import { MainContext } from "context/Main/";
 import React, { useContext, useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  Table as ReactstrapTable,
-} from "reactstrap";
+import { Card, CardHeader, Table as ReactstrapTable } from "reactstrap";
 import TableBody from "./tableBody";
-import TableFooter from "./TableFooter";
 import TableHeader from "./tableHeader";
 
 const Table = ({ columns, data, title, state, getLoading }) => {
@@ -36,9 +30,9 @@ const Table = ({ columns, data, title, state, getLoading }) => {
         <TableHeader columns={columns} />
         <TableBody data={data} columns={columns} />
       </ReactstrapTable>
-      <CardFooter>
+      {/* <CardFooter>
         <TableFooter />
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

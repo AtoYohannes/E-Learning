@@ -10,8 +10,10 @@ import {
 } from "reactstrap";
 import CoursesCard from "../../../Components/Card/CoursesCard";
 import Categories from "./Categories";
+import Courses from "./Courses";
 import Schools from "./Schools";
 import Students from "./Students";
+import Teachers from "./Teachers";
 
 const Tabs = (props) => {
   const [activeTab, setActiveTab] = useState("1");
@@ -98,15 +100,7 @@ const Tabs = (props) => {
       </Nav>
       <TabContent className="mt-3" activeTab={activeTab}>
         <TabPane tabId="1">
-          <h5>Your Enrolled Courses</h5>
-          <hr />
-          <Row>
-            {courses.map((course, index) => (
-              <Col md={6} sm={12}>
-                <CoursesCard index={index} course={course} />
-              </Col>
-            ))}
-          </Row>
+          <Courses />
         </TabPane>
         <TabPane tabId="2">
           <h5>Courses In Progress</h5>
@@ -140,7 +134,7 @@ const Tabs = (props) => {
           <Students />
         </TabPane>
         <TabPane tabId="7">
-          <h1>7</h1>
+          <Teachers />
         </TabPane>
       </TabContent>
     </div>

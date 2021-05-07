@@ -1,7 +1,7 @@
+import CoursesCard from "Components/Card/CoursesCard";
 import React from "react";
 import { Link } from "react-router-dom";
 import { CardBody, CardHeader, Col, Row } from "reactstrap";
-import CoursesCardTwo from "../../../Components/Card/CoursesCardTwo";
 import routes from "../../../Config/routes";
 
 const popularCourses = [{}, {}, {}, {}];
@@ -15,8 +15,8 @@ const PopularCourses = () => {
       <CardBody className="popularCoursesBody">
         <Row>
           {popularCourses.map(() => (
-            <Col md={3} sm={6} xs={12}>
-              <CoursesCardTwo />
+            <Col md={6} sm={6} xs={12}>
+              <CoursesCard />
             </Col>
           ))}
         </Row>

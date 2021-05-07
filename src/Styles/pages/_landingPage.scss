@@ -6,7 +6,7 @@
     font-weight: bold;
   }
   .myCoursesContainer {
-    padding: 0 50px;
+    padding: 0 10px;
     background: $background;
     height: auto;
     h5 {
@@ -116,7 +116,7 @@
   justify-content: space-between;
   background: $light;
   border: none;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   box-shadow: 4px 4px 4px darken($color: #d4d4d4, $amount: 5);
   transition: 0.5s;
   .header {

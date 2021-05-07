@@ -18,7 +18,7 @@ const Courses = ({ doneAdd, doneEdit, addCourse, options }) => {
   return (
     <Card className="mt-2 p-2 bg-none">
       <CommonModals
-        size={state.size}
+        size="xl"
         data={state.data}
         openModal={state.openModal}
         component={state.Component}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardImg, CardImgOverlay } from "reactstrap";
-import Image from "../../Assets/WeddingPicture.png";
+import Image from "../../Assets/BookCover.jpg";
 import routes from "../../Config/routes";
 
 const CoursesCardTwo = () => {

@@ -1,0 +1,77 @@
+.profileContainer {
+  min-height: 80vh;
+  .personalInfoContainer {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    h4 {
+      font-weight: bold;
+    }
+  }
+  .tabsContainer {
+    padding: 0px 2%;
+    .nav-item {
+      color: $dark;
+      .nav-link {
+        display: flex;
+        align-items: center;
+        &.activepageTab {
+          cursor: pointer;
+          padding-left: 25px;
+          padding-right: 25px;
+          border-bottom: 4px solid $secondary;
+          display: inline-flex;
+          transition: 0.3s ease-in;
+          text-transform: uppercase;
+        }
+        &.notactivepageTab {
+          transition: 0.3s ease-in;
+          text-transform: uppercase;
+          padding-left: 25px;
+          padding-right: 25px;
+        }
+        &.notactivepageTab:hover {
+          cursor: pointer;
+          border-bottom: 4px solid $secondary;
+          transition: 0.18s ease-in;
+        }
+      }
+    }
+  }
+}
+
+.formStepper {
+  .nav-item {
+    color: $dark;
+    .nav-link {
+      display: flex;
+      align-items: center;
+      &.activepageTab {
+        font-size: 11px;
+        cursor: pointer;
+        padding-left: 25px;
+        padding-right: 25px;
+        border-bottom: 4px solid $secondary;
+        display: inline-flex;
+        transition: 0.3s ease-in;
+        text-transform: uppercase;
+      }
+      &.notactivepageTab {
+        transition: 0.3s ease-in;
+        text-transform: uppercase;
+        padding-left: 25px;
+        padding-right: 25px;
+        font-size: 11px;
+      }
+      &.notactivepageTab:hover {
+        cursor: pointer;
+        font-size: 11px;
+
+        border-bottom: 4px solid $secondary;
+        transition: 0.18s ease-in;
+      }
+    }
+  }
+}

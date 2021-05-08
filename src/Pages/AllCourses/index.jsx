@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import CoursesCard from "../../Components/Card/CoursesCardTwo";
+import { selectCourses } from "../../store/States/Courses"
 
 const courses = [
   {},
@@ -26,16 +28,16 @@ const courses = [
   {},
 ];
 
-const AllCourses = () => {
+const AllCourses = ({ courses }) => {
   return (
     <div className="allCoursesContainer">
       <h5>All Courses</h5>
       <hr />
       <div className="coursesBody">
         <Row>
-          {courses.map(() => (
+          {courses.map((course) => (
             <Col md={4} sm={6} xs={12}>
-              <CoursesCard />
+              <CoursesCard course={course} />
             </Col>
           ))}
         </Row>
@@ -43,4 +45,9 @@ const AllCourses = () => {
     </div>
   );
 };
-export default AllCourses;
+
+const mapStateToProps = state => ({
+  courses: selectCourses(state)
+})
+
+export default connect(mapStateToProps)(AllCourses);

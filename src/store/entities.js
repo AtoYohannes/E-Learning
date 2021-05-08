@@ -24,6 +24,7 @@ import {
   stateName as category,
   reducer as categoryReducer
 } from "./Categories";
+import newEntities from "./newEntities"
 
 export default combineReducers({
   [restaurants]: RestaurantsReducer,
@@ -34,5 +35,6 @@ export default combineReducers({
   [feedbacks]: FeedbacksReducer,
   [restaurant_owners]: RestaurantOwners,
   [auth]: authReducer,
-  [category]: categoryReducer
+  [category]: categoryReducer,
+  ...newEntities
 });

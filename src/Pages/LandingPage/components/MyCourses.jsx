@@ -1,32 +1,22 @@
 import CategoriesCard from "Components/Card/CategoriesCard";
 import CoursesCardTwo from "Components/Card/CoursesCardTwo";
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardHeader, Col, Row } from "reactstrap";
+import { selectCategories, Fetch, FetchCategories } from "../../../store/States/Categories"
+import { selectCourses, Fetch as FetchCourseAPI, FetchCourses } from "../../../store/States/Courses/"
+import { connect } from "react-redux"
 
-const categories = [
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-];
-const courses = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+const courses = [{}, {}, {}, {}, {}];
 
-const MyCourses = () => {
+const MyCourses = ({ fetchCategories, categories, courses, fetchCourses }) => {
+  useEffect(() => {
+    fetchCategories()
+  }, [fetchCategories])
+
+  useEffect(() => {
+    fetchCourses()
+  }, [fetchCourses])
+
   return (
     <div className="myCoursesContainer">
       <Row>
@@ -36,8 +26,8 @@ const MyCourses = () => {
               <h4>Categories</h4>
             </CardHeader>
             <div className="categoriesContainer">
-              {categories.map(() => (
-                <CategoriesCard />
+              {categories.map((item) => (
+                <CategoriesCard categoryName={item.name}/>
               ))}
             </div>
           </Card>
@@ -45,9 +35,9 @@ const MyCourses = () => {
         <Col md={10} sm={10} xs={12}>
           <div className="coursesContainer">
             <Row>
-              {courses.map(() => (
+              {courses.map((course) => (
                 <Col md={3} sm={3} xs={12}>
-                  <CoursesCardTwo />
+                  <CoursesCardTwo course={course} />
                 </Col>
               ))}
             </Row>
@@ -58,4 +48,14 @@ const MyCourses = () => {
   );
 };
 
-export default MyCourses;
+const mapStateToProps = state => ({
+  categories: selectCategories(state),
+  courses: selectCourses(state)
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchCategories: () => dispatch(Fetch(FetchCategories())),
+  fetchCourses: () => dispatch(FetchCourseAPI(FetchCourses()))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyCourses)

@@ -7,7 +7,7 @@ import routes from "./Config/routes";
 import { Spinner } from "reactstrap";
 import { MainLayout } from "./Components/Layout";
 import configureStore from "./store/configureStore";
-import { load } from "./autoload";
+import Autoload from "./autoload";
 
 const LandingPage = React.lazy(() => import("./Pages/LandingPage"));
 const SingleCourse = React.lazy(() => import("./Pages/SingleCourse"));
@@ -22,12 +22,8 @@ const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split("/").pop()}`;
 };
 
-export const store = configureStore();
-store.dispatch(load());
-
 function App() {
   return (
-    <Provider store={store}>
       <BrowserRouter basename={getBasename()}>
         <Switch>
           <React.Fragment>
@@ -63,7 +59,6 @@ function App() {
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>
-    </Provider>
   );
 }
 

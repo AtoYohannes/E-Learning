@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Card, CardHeader } from "reactstrap";
 import routes from "../../Config/routes";
 
-const CategoriesCard = () => {
+const CategoriesCard = ({ categoryName }) => {
   return (
     <Link
       style={{
@@ -13,7 +13,7 @@ const CategoriesCard = () => {
       to={{ pathname: routes.allCourses }}
     >
       <Card className="categories">
-        <CardHeader className="header">Technology</CardHeader>
+        <CardHeader className="header">{categoryName}</CardHeader>
         <div className="header">
           <MdArrowForward />
         </div>

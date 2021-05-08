@@ -3,13 +3,18 @@ import React from "react";
 import { MdApps, MdPerson } from "react-icons/md";
 import { Link } from "react-router-dom";
 import routes from "../../../Config/routes";
+import { selectMainBuffer } from "../../../store/States/Buffer/"
+import { selectUniversities } from "../../../store/States/Universities"
+import { selectTeachers } from "../../../store/States/Teachers"
+import { connect } from "react-redux"
+import { resolveUniversity, resolveTeacher } from "../../../helpers/customResolvers"
 
-const CourseHeader = () => {
-  return (
+const CourseHeader = ({ buffer, universities, teachers }) => {
+  return buffer.selectedCourse && (
     <div className="singleCourseHeaderContainer">
-      <h5>Hawassa University</h5>
+      <h5>{resolveUniversity(buffer.selectedCourse.universityID, universities)}</h5>
       <div className="label">
-        <h1>Introduction to Machine Learning</h1>
+        <h1>{buffer.selectedCourse.title}</h1>
         <Button>
           <Link to={{ pathname: routes.singleCourseInsider }}>
             <MdApps className="mr-2" />
@@ -20,9 +25,16 @@ const CourseHeader = () => {
 
       <h6>
         <MdPerson className="mr-2" />
-        Yohannes Berhanu
+        {resolveTeacher(buffer.selectedCourse.teacherID, teachers)}
       </h6>
     </div>
   );
 };
-export default CourseHeader;
+
+const mapStateToProps = state => ({
+  buffer: selectMainBuffer(state),
+  universities: selectUniversities(state),
+  teachers: selectTeachers(state)
+})
+
+export default connect(mapStateToProps)(CourseHeader);

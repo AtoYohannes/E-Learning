@@ -28,7 +28,7 @@
     "react-images-upload": "^1.2.8",
     "react-pdf": "^5.2.0",
     "react-player": "^2.9.0",
-    "react-redux": "^7.2.1",
+    "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-shimmer-effect": "^1.0.9",
@@ -37,7 +37,10 @@
     "react-toastify": "^7.0.4",
     "reactjs-pdf-reader": "^1.0.12",
     "reactstrap": "^8.5.1",
-    "redux": "^4.0.5"
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-localstorage-simple": "^2.4.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

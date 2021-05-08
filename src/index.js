@@ -3,10 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from "react-redux"
+import thunk from "redux-thunk"
+import { createStore, applyMiddleware } from "redux"
+import { save, load } from "redux-localstorage-simple"
+import logger from './store/middleware/logger'
+import api from './store/middleware/api_gql'
+import reducer from "./store/reducer"
+import { composeWithDevTools } from "redux-devtools-extension"
+import Autoload from "./autoload";
+
+export const store = createStore(
+  reducer,
+  load(),
+  composeWithDevTools(applyMiddleware(thunk, save(), logger({ destination: "console" }), api)) 
+)
+
+store.dispatch(Autoload())
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

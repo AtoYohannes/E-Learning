@@ -64,3 +64,13 @@ button,
     padding: 5px 50px;
   }
 }
+
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  input {
+    font-size: 12px;
+  }
+}

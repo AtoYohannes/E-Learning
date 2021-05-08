@@ -1,3 +1,5 @@
+import SignIn from "Pages/Auth/SignIn";
+import SignUp from "Pages/Auth/SignUp";
 import React from "react";
 
 const SlidingDrawer = ({ type, show }) => {
@@ -8,7 +10,7 @@ const SlidingDrawer = ({ type, show }) => {
 
   return (
     <div className={drawerClasses}>
-      {type === "signIn" ? "Sign In" : "Sign Up"}
+      {type === "signIn" ? <SignIn /> : <SignUp />}
     </div>
   );
 };

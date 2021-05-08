@@ -1,8 +1,10 @@
+import routes from "Config/routes";
 import React from "react";
 import { MdVideoCall, MdReceipt, MdPictureAsPdf, MdHelp } from "react-icons/md";
 import { Card, Row, Col, Button } from "reactstrap";
 import InstructorImage from "../../../Assets/Nunu.jpg";
 import Avatar from "../../../Components/Avatar";
+import { Link } from "react-router-dom";
 
 const chapters = [
   { type: "video" },
@@ -53,17 +55,24 @@ const Body = () => {
         {chapters.map((course, index) => {
           return (
             <Col key={index} md={4} sm={6} xs={12}>
-              <Card className="chapters">
-                <h7>Chapter 1</h7>
-                <h6>Basics of The Course</h6>
-                <div className="courseType">
-                  {course.type === "video" ? <MdVideoCall size={20} /> : null}
-                  {course.type === "reading" ? <MdReceipt size={20} /> : null}
-                  {course.type === "pdf" ? <MdPictureAsPdf size={20} /> : null}
-                  {course.type === "test" ? <MdHelp size={20} /> : null}
-                  <h7>Estimated 1hr 30 Minutes</h7>
-                </div>
-              </Card>
+              <Link
+                style={{ textDecoration: "none" }}
+                to={{ pathname: routes.singleCourseInsider }}
+              >
+                <Card className="chapters">
+                  <h7>Chapter 1</h7>
+                  <h6>Basics of The Course</h6>
+                  <div className="courseType">
+                    {course.type === "video" ? <MdVideoCall size={20} /> : null}
+                    {course.type === "reading" ? <MdReceipt size={20} /> : null}
+                    {course.type === "pdf" ? (
+                      <MdPictureAsPdf size={20} />
+                    ) : null}
+                    {course.type === "test" ? <MdHelp size={20} /> : null}
+                    <h7>Estimated 1hr 30 Minutes</h7>
+                  </div>
+                </Card>
+              </Link>
             </Col>
           );
         })}

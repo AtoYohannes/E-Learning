@@ -3,11 +3,10 @@ import { initialState, reducer, _toggle } from "common/ModalOptions";
 import CoursesCardTwo from "Components/Card/CoursesCardTwo";
 import React, { useEffect, useReducer } from "react";
 import { Card, Col, Row, Button } from "reactstrap";
-
 import { getEnrolledCourses } from "../../../../helpers/customResolvers"
 import CourseForm from "./CoursesForm"
 
-const Courses = ({ doneAdd, doneEdit, courses, enrollments, categories, universities, teachers }) => {
+const Courses = ({ unVerifiedCourses, doneAdd, doneEdit, courses, enrollments, categories, universities, teachers, addCourse }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -16,6 +15,7 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollments, categories, universi
     }
   }, [doneAdd, doneEdit]);
 
+  console.log("her", unVerifiedCourses)
   return (
     <Card className="mt-2 p-2 bg-none">
       <CommonModals
@@ -34,7 +34,7 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollments, categories, universi
               {
                 type: "ADD",
                 Component: CourseForm,
-                submit: () => null,
+                submit: addCourse,
                 title: "New Course",
                 size: "md",
                 options: {
@@ -52,7 +52,7 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollments, categories, universi
       <h5>Courses</h5>
       <hr />
       <Row>
-        {getEnrolledCourses("6095d13e5a4a30193a5d9472", enrollments, courses).map((course, index) => (
+        {unVerifiedCourses.map((course, index) => (
           <Col md={3} sm={12}>
             <CoursesCardTwo index={index} course={course} />
           </Col>

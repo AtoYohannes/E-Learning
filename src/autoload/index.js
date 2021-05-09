@@ -5,6 +5,8 @@ import { Fetch as fetchEnrollmentRequests, FetchEnrollmentRequests } from "../st
 import { Fetch as fetchEnrollments, FetchEnrollments } from "../store/States/Enrollments"
 import { Fetch as fetchCategories, FetchCategories } from "../store/States/Categories"
 import { Fetch as fetchStudents, FetchStudents } from "../store/States/Students"
+import { Fetch as fetchContents, FetchContents } from "../store/States/Contents"
+import { Fetch as fetchUnverifiedCourses, FetchUnVerifiedCourses } from "../store/States/UnCompletedCourses"
 
 export default () => dispatch => {
   dispatch(fetchUniversities(FetchUniversities()))
@@ -14,4 +16,6 @@ export default () => dispatch => {
   dispatch(fetchEnrollments(FetchEnrollments()))
   dispatch(fetchCategories(FetchCategories()))
   dispatch(fetchStudents(FetchStudents()))
+  dispatch(fetchContents(FetchContents()))
+  dispatch(fetchUnverifiedCourses(FetchUnVerifiedCourses()))
 };

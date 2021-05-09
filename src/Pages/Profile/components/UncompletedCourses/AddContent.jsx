@@ -14,21 +14,20 @@ import {
   TabPane,
 } from "reactstrap";
 import ParentForm from "../../../../common/form";
-import Chapters from "./chapters/chapters";
 
-class FoodsForm extends ParentForm {
+class AddContent extends ParentForm {
   constructor(props) {
     super(props);
     this.initialState = {
       activeTab: "1",
       data: {
+        id: "",
+        chapterID: "",
         title: "",
-        briefIntroduction: "",
-        language: "",
-        numberOfChapters: "",
-        teacherID: "",
-        universityID: "",
-        categoryID: "",
+        contentType: "",
+        contentData: "",
+        isMandatory: false,
+        timeRequiredInMinutes: "",
       },
       errors: {},
     };
@@ -36,12 +35,12 @@ class FoodsForm extends ParentForm {
     this.schema = {
       id: Joi.string().allow("").optional(),
       title: Joi.string().min(2).max(50).required(),
-      briefIntroduction: Joi.string().min(2).max(50).required(),
-      language: Joi.string().min(2).max(50).required(),
-      numberOfChapters: Joi.string().min(2).max(50).required(),
-      teacherID: Joi.string().min(2).max(50).required(),
-      universityID: Joi.string().min(2).max(50).required(),
-      categoryID: Joi.string().min(2).max(50).required(),
+      chapterID: Joi.string().min(2).max(50).required(),
+      title: Joi.string().min(2).max(50).required(),
+      contentType: Joi.string().min(2).max(50).required(),
+      contentData: Joi.string().min(2).max(50).required(),
+      isMandatory: Joi.boolean().allow(false).required(),
+      timeRequiredInMinutes: Joi.number().min(1).max(50).required(),  
     };
   }
   toggle = (tab) => {
@@ -57,13 +56,11 @@ class FoodsForm extends ParentForm {
       ...this.state,
       data: {
         id: data._id ? data._id : "",
+        chapterID: data.chapterID,
         title: data.title,
-        briefIntroduction: data.briefIntroduction,
-        language: data.language,
-        numberOfChapters: data.numberOfChapters,
-        teacherID: data.teacherID,
-        universityID: data.universityID,
-        categoryID: data.categoryID,
+        contentType: data.contentType,
+        contentData: data.contentData,
+        isMandatory: data.isMandatory,
       },
       lockUpdate: true,
     };
@@ -81,7 +78,6 @@ class FoodsForm extends ParentForm {
 
   doSubmit() {
     const { data } = this.state;
-
     this.props.submit(data);
   }
 
@@ -100,55 +96,50 @@ class FoodsForm extends ParentForm {
               <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
                   name: "title",
-                  label: "Course Title",
+                  label: "Content Title",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
                 {this.renderSelect({
-                  name: "language",
-                  label: "Language",
-                  options: ["Amharic", "English", "Arabic"],
-                })}
-              </Col>
-              <Col md={4} sm={6} xs={12}>
-                {this.renderInput({
-                  name: "numberOfChapters",
-                  label: "Number of Chapters",
-                  type: "number",
-                })}
-              </Col>
-              <Col md={4} sm={6} xs={12}>
-                {this.renderSelect({
-                  name: "teacherID",
-                  label: "Assigned Teacher",
-                  options: this.props.options.teachers.map(item => ({
-                    ...item,
-                    name: item.firstName + " " + item.lastName
+                  name: "chapterID",
+                  label: "Chapter",
+                  options: this.props.options.chapters.map(chapter => ({
+                    ...chapter,
+                    name: chapter.title
                   })),
                   optionsFrom: "server"
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
                 {this.renderSelect({
-                  name: "universityID",
-                  label: "University Name",
-                  options: this.props.options.universities,
+                  name: "contentType",
+                  label: "Content Type",
+                  options: [
+                    { _id: "VIDEO", name: "Video" },
+                    { _id: "PDF", name: "PDF" },
+                    { _id: "CONTENT", name: "Content" },
+                  ],
                   optionsFrom: "server"
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
-                {this.renderSelect({
-                  name: "categoryID",
-                  label: "Category",
-                  options: this.props.options.categories,
-                  optionsFrom: "server"
+                {this.renderInput({
+                  name: "contentData",
+                  label: "Content Data",
+                  type: "textarea"
                 })}
               </Col>
-              <Col md={12} sm={12} xs={12}>
+              <Col md={4} sm={6} xs={12}>
+                {this.renderCheckbox({
+                  name: "isMandatory",
+                  label: "Is Mandatory",
+                })}
+              </Col>
+              <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
-                  name: "briefIntroduction",
-                  label: "Course Description",
-                  type: "textarea",
+                  name: "timeRequiredInMinutes",
+                  label: "Time Required in Minutes",
+                  type: "number"
                 })}
               </Col>
             </Row>
@@ -162,4 +153,4 @@ class FoodsForm extends ParentForm {
     );
   }
 }
-export default FoodsForm;
+export default AddContent;

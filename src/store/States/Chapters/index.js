@@ -5,7 +5,7 @@ const Chapters = new StateArrayModel({ stateName: "chapters_new" })
 Chapters.setInitialState()
 
 Chapters.setFetchBody("fetchChapters")
-// Chapters.setAddBody("postNotice")
+Chapters.setAddBody("postChapter")
 // Chapters.setDeleteBody("removeNotice")
 
 Chapters.createSlice()
@@ -35,6 +35,42 @@ export const FetchChapters = () => ({
       updatedAt
     }
   }`,
+})
+
+export const AddChapter = ({
+  title, courseID, numberOfReading, numberOfVideos, numberOfAssignments
+}) => ({
+  query: `mutation (
+    $title: String!, $courseID: String!, $numberOfReading: Int!,
+    $numberOfVideos: Int!, $numberOfAssignments: Int!
+  ) {
+    postChapter(ChapterInput: {
+      title: $title,
+      courseID: $courseID,
+      numberOfReading: $numberOfReading,
+      numberOfVideos: $numberOfVideos,
+      numberOfAssignments: $numberOfAssignments
+    }) {
+      _id
+      title
+      courseID
+      numberOfReading
+      numberOfVideos
+      numberOfAssignments
+      error {
+        type
+        message
+      }
+      createdAt
+      updatedAt
+    }
+  }`,
+  variables: {
+    title, courseID,
+    numberOfReading: Number(numberOfReading),
+    numberOfVideos: Number(numberOfVideos),
+    numberOfAssignments: Number(numberOfAssignments)
+  }
 })
 
 export { selectData as selectChapters }

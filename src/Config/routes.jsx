@@ -5,6 +5,7 @@ export default {
   allCourses: "/allCourses",
   allCategories: "/allCategories",
   profile: "/profile",
+  singleChapter: "/singleChapter",
 
   // ======== School Manager Routes ========
   teacher: "/teacher",

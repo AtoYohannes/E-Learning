@@ -81,7 +81,6 @@ class FoodsForm extends ParentForm {
 
   doSubmit() {
     const { data } = this.state;
-
     this.props.submit(data);
   }
 

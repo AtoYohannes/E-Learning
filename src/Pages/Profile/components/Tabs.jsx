@@ -12,12 +12,14 @@ import CoursesCard from "../../../Components/Card/CoursesCard";
 import Categories from "./Categories";
 import Courses from "./Courses";
 import RequestingCourses from "./RequestCourses"
+import UncompletedCoures from "./UncompletedCourses/"
 import Schools from "./Schools";
 import Students from "./Students";
 import Teachers from "./Teachers";
+import NewCourses from "./NewCourses"
 
 const Tabs = (props) => {
-  const [activeTab, setActiveTab] = useState("0");
+  const [activeTab, setActiveTab] = useState("2");
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -55,7 +57,7 @@ const Tabs = (props) => {
               toggle("2");
             }}
           >
-            In Progress
+            Un completed courses
           </NavLink>
         </NavItem>
         <NavItem>
@@ -65,7 +67,7 @@ const Tabs = (props) => {
               toggle("3");
             }}
           >
-            Completed Courses
+            New Courses
           </NavLink>
         </NavItem>{" "}
         <NavItem>
@@ -117,26 +119,10 @@ const Tabs = (props) => {
           <Courses />
         </TabPane>
         <TabPane tabId="2">
-          <h5>Courses In Progress</h5>
-          <hr />
-          <Row>
-            {courses.map((course, index) => (
-              <Col md={6} sm={12}>
-                <CoursesCard index={index} course={course} />
-              </Col>
-            ))}
-          </Row>
+          <UncompletedCoures courses={courses} />
         </TabPane>
         <TabPane tabId="3">
-          <h5>Completed Courses</h5>
-          <hr />
-          <Row>
-            {courses.map((course, index) => (
-              <Col md={6} sm={12}>
-                <CoursesCard index={index} course={course} />
-              </Col>
-            ))}
-          </Row>
+          <NewCourses />
         </TabPane>
         <TabPane tabId="4">
           <Schools />

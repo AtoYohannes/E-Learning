@@ -7,6 +7,7 @@ import {
   selectAddStatus, selectDeleteStatus, selectEditStatus, selectFetchStatus,
   FetchCourses, AddCourse, selectCourses
 } from "store/States/Courses";
+import { selectUnVerifiedCourses } from "store/States/UnCompletedCourses"
 import { selectEnrollments } from "../../../../store/States/Enrollments"
 import { selectCategories } from "store/States/Categories"
 import { selectUniversities } from "store/States/Universities"
@@ -28,6 +29,7 @@ const Loader = ({
   universities,
   teachers,
   enrollments,
+  unVerifiedCourses
 }) => {
   const [data, setData] = useState([]);
   const [fetchLock, setFetchLock] = useState(true);
@@ -114,6 +116,7 @@ const Loader = ({
       universities={universities}
       teachers={teachers}
       enrollments={enrollments}
+      unVerifiedCourses={unVerifiedCourses}
     />
   );
 };
@@ -128,7 +131,8 @@ const mapStateToProps = (state, ownProps) => ({
   categories: selectCategories(state),
   universities: selectUniversities(state),
   teachers: selectTeachers(state),
-  enrollments: selectEnrollments(state)
+  enrollments: selectEnrollments(state),
+  unVerifiedCourses: selectUnVerifiedCourses(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

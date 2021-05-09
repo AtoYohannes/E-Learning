@@ -51,3 +51,66 @@ export const checkIfCourseIsPendingApproval = (studentID, courseID, enrollmentRe
   const foundIndex = studentEnrollmentRequests.findIndex(request => request.courseID === courseID)
   return foundIndex >= 0
 }
+
+export const getContentsFromChapter = (chapterID, contents = []) => {
+  const foundContents = []
+  contents.forEach(content => {
+    if (String(content.chapterID) == String(chapterID)) {
+      foundContents.push(content)
+    }
+  })
+  return foundContents
+}
+
+export const getSingleContentFromChapter = (contentID, contents = []) => {
+  const foundContent = contents.find(content => String(content._id) === String(contentID))
+  return foundContent? foundContent : {}
+}
+
+export const getNextContent = (contentID, contents = []) => {
+  const foundContentIndex = contents.findIndex(content => String(content._id) === String(contentID))
+  if (foundContentIndex >= 0) {
+    return foundContentIndex === (contents.length - 1)? null : contents[foundContentIndex + 1]
+  } else {
+    return null
+  }
+}
+
+export const getPrevContent = (contentID, contents = []) => {
+  const foundContentIndex = contents.findIndex(content => String(content._id) === String(contentID))
+  if (foundContentIndex >= 0) {
+    return foundContentIndex === 0? null : contents[foundContentIndex - 1]
+  } else {
+    return null
+  }
+}
+
+export const checkCourseVerification = (course = { _id: "" }, chapters = [], contents = []) => {
+  const foundChapters = []
+  chapters.forEach(chapter => {
+    if (String(course._id) === String(chapter.courseID)) {
+      foundChapters.push(chapter)
+    }
+  })
+  if (foundChapters.length === 0) {
+    return false
+  }
+  const foundContents = []
+  contents.forEach(content => {
+    if (String(content.chapterID) === String(foundChapters[0]._id)) {
+      foundContents.push(content)
+    }
+  })
+
+  return foundContents.length > 0
+}
+
+export const getSingleCourse = (courseID, courses = []) => {
+  const foundCourse = courses.find(course => String(course._id) === String(courseID))
+  return foundCourse? foundCourse : {}
+}
+
+export const isCourseAvailable = (courseID, courses = []) => {
+  const obj = getSingleCourse(courseID, courses)
+  return Object.keys(obj).length > 0
+}

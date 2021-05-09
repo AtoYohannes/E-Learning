@@ -1,30 +1,30 @@
 import StateArrayModel from "../../../wrappers/StateModels/StateArrayModelGQL"
 
-const Courses = new StateArrayModel({ stateName: "courses_new" })
+const UnVerifiedCourses = new StateArrayModel({ stateName: "unverified_courses_new" })
 
-Courses.setInitialState()
+UnVerifiedCourses.setInitialState()
 
-Courses.setFetchBody("fetchCourses")
+UnVerifiedCourses.setFetchBody("fetchUnverifiedCourses")
 // Categories.setAddBody("postNotice")
 // Categories.setDeleteBody("removeNotice")
 
-Courses.createSlice()
+UnVerifiedCourses.createSlice()
 
 export const {
   selectAddStatus, selectFetchStatus, selectEditStatus, selectDeleteStatus, selectData
-} = Courses.getSelectors()
+} = UnVerifiedCourses.getSelectors()
 
 export const {
   stateName, reducer
-} = Courses.getEntity()
+} = UnVerifiedCourses.getEntity()
 
 export const {
   Fetch, Add, Remove
-} = Courses.getAPIHandles()
+} = UnVerifiedCourses.getAPIHandles()
 
-export const FetchCourses = () => ({
+export const FetchUnVerifiedCourses = () => ({
   query: `query {
-    fetchCourses {
+    fetchUnverifiedCourses {
       _id
       title
       briefIntroduction
@@ -41,7 +41,7 @@ export const AddCourse = ({
   title, briefIntroduction, language, numberOfChapters, teacherID, universityID, categoryID
 }) => ({
   query: `mutation(
-    $title: String!, $briefIntroduction: String!, $language: String!, $numberOfChapters: Int!,
+    $title: String!, $briefIntroduction: String!, $language: String!, $numberOfChapters: String!,
     $teacherID: String!, $universityID: String!, $categoryID: String!
   ) {
     postCourse(CourseInput: {
@@ -64,10 +64,8 @@ export const AddCourse = ({
     }
   }`,
   variables: {
-    title, briefIntroduction, language,
-    numberOfChapters: Number(numberOfChapters),
-    teacherID, universityID, categoryID
+    title, briefIntroduction, language, numberOfChapters, teacherID, universityID, categoryID
   }
 })
 
-export { selectData as selectCourses }
+export { selectData as selectUnVerifiedCourses }

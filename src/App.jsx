@@ -14,6 +14,7 @@ const SingleCourse = React.lazy(() => import("./Pages/SingleCourse"));
 const SingleCourseInsider = React.lazy(() =>
   import("./Pages/SingleCourseInsider")
 );
+const ChapterPage = React.lazy(() => import("./Pages/SingleCourseInsider/"))
 const Categories = React.lazy(() => import("./Pages/Categories"));
 const AllCourses = React.lazy(() => import("./Pages/AllCourses"));
 const Profile = React.lazy(() => import("./Pages/Profile"));
@@ -40,6 +41,11 @@ function App() {
                   exact
                   path={routes.singleCourse}
                   component={SingleCourse}
+                />
+                <Route
+                  exact
+                  path={routes.singleChapter}
+                  component={ChapterPage}
                 />
                 <Route
                   exact

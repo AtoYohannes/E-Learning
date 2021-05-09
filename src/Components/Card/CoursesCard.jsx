@@ -1,26 +1,95 @@
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, CardBody, CardFooter } from "reactstrap";
+import { Button, Card, CardBody, CardFooter, Row } from "reactstrap";
+import { MdDelete, MdEdit, MdRemoveRedEye } from "react-icons/md";
+import { initialState, reducer, _toggle } from "common/ModalOptions";
 import routes from "../../Config/routes";
 import { selectUniversities } from "../../store/States/Universities"
 import { selectTeachers } from "../../store/States/Teachers"
 import { connect } from "react-redux"
-import { resolveUniversity, resolveTeacher } from "../../helpers/customResolvers"
+import { resolveUniversity, resolveTeacher, getCourseChapters, checkCourseVerification, isCourseAvailable } from "../../helpers/customResolvers"
+import { selectCourses } from "store/States/Courses"
 import { UpdateMainBuffer } from "../../store/States/Buffer"
+import { selectContents } from "store/States/Contents"
+import { selectChapters } from "store/States/Chapters"
+import CustomTable from "common/table";
+import AddContent from "../../Pages/Profile/components/UncompletedCourses/AddContent"
 
-const CoursesCard = ({ course, universities, teachers, UpdateMainBuffer }) => {
+const CoursesCard = ({
+  course, universities, teachers, UpdateMainBuffer, disable, title, addChapter, contents, chapters,
+  addContent, viewContent, verifyCourse, courses
+}) => {
+  const columns = [
+    { path: "title", label: "Chapter Title" },
+    {
+      key: "view",
+      label: "Actions",
+      content: (chapter) => (
+        <Row>
+          <Button
+            className="buttons"
+            size="sm"
+            color="blue"
+            onClick={(chapter) => {
+              addContent(chapter)
+            }}
+          >
+            <icon>
+              {" "}
+              <MdRemoveRedEye />
+            </icon>
+            <small>
+              <b>Add Content</b>
+            </small>
+          </Button>
+        </Row>
+      )
+    },
+    {
+      key: "view",
+      label: "Actions",
+      content: (chapter) => (
+        <Row>
+          <Button
+            className="buttons"
+            size="sm"
+            color="blue"
+            onClick={() => {
+              viewContent(chapter)
+            }}
+          >
+            <icon>
+              {" "}
+              <MdRemoveRedEye />
+            </icon>
+            <small>
+              <b>See Contents</b>
+            </small>
+          </Button>
+        </Row>
+      )
+    }
+  ]
+
+  console.log("here", isCourseAvailable(course._id, courses))
+
   return (
     <Card className="coursesCardContainer">
       <CardBody className="coursesCard">
         <div>
           <header>{course.title}</header>
-          <tag>New</tag>
+          <tag style={{ fontSize: 12 }} onClick={() => addChapter()}>New Chapter</tag>
+          {checkCourseVerification(course, chapters, contents)?
+          isCourseAvailable(course._id, courses)?
+          <tag style={{ fontSize: 12 }}>Verified</tag> :
+          <tag style={{ fontSize: 12 }} onClick={() => verifyCourse(course._id)}>Verify Course</tag>
+           : <></>
+          }
+          <CustomTable title="Chapters" columns={columns} data={getCourseChapters(course._id, chapters)} />
         </div>
-        <Link to={{ pathname: routes.singleCourse }} onClick={() => {
-          UpdateMainBuffer({ selectedCourse: course })
-        }}>
-          <Button>Go to Course</Button>
-        </Link>
+        {/* <Button style={{ width: 50, height: 30 }}>{
+          title ? title : "Go to Course"
+        }</Button> */}
       </CardBody>
       <CardFooter className="courseFooter">
         <h6>{resolveUniversity(course.universityID, universities)}</h6>
@@ -33,7 +102,10 @@ const CoursesCard = ({ course, universities, teachers, UpdateMainBuffer }) => {
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
   universities: selectUniversities(state),
-  teachers: selectTeachers(state)
+  teachers: selectTeachers(state),
+  contents: selectContents(state),
+  chapters: selectChapters(state),
+  courses: selectCourses(state)
 })
 
 const mapDispatchToProps = dispatch => ({

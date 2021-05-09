@@ -6,14 +6,15 @@ import routes from "../../../Config/routes";
 import { selectMainBuffer } from "../../../store/States/Buffer/"
 import { selectUniversities } from "../../../store/States/Universities"
 import { selectTeachers } from "../../../store/States/Teachers"
+import { selectCourses } from "store/States/Courses"
 import { connect } from "react-redux"
-import { resolveUniversity, resolveTeacher, checkIfCourseIsPendingApproval } from "../../../helpers/customResolvers"
+import { resolveUniversity, resolveTeacher, checkIfCourseIsPendingApproval, isCourseAvailable } from "../../../helpers/customResolvers"
 import { PostEnrollmentRequest, Add, selectAddStatus, selectEnrollmentRequests } from "../../../store/States/EnrollmentRequests"
 import { Spinner } from "reactstrap"
 
 const CourseHeader = ({
   buffer, universities, teachers, postEnrollmentRequest,
-  addStatus, enrollmentRequests
+  addStatus, enrollmentRequests, courses
 }) => {
   const [addLock, setAddLock] = useState(true)
   const [redirect, setRedirect] = useState("")
@@ -24,7 +25,7 @@ const CourseHeader = ({
   }, [addStatus])
 
   return redirect.length > 0 ? <Redirect to={redirect} /> :
-    buffer.selectedCourse && (
+    buffer.selectedCourse && isCourseAvailable(buffer.selectedCourse._id, courses) && (
       <div className="singleCourseHeaderContainer">
         <h5>{resolveUniversity(buffer.selectedCourse.universityID, universities)}</h5>
         <div className="label">
@@ -62,7 +63,8 @@ const mapStateToProps = state => ({
   universities: selectUniversities(state),
   teachers: selectTeachers(state),
   addStatus: selectAddStatus(state),
-  enrollmentRequests: selectEnrollmentRequests(state)
+  enrollmentRequests: selectEnrollmentRequests(state),
+  courses: selectCourses(state)
 })
 
 const mapDispatchToProps = dispatch => ({

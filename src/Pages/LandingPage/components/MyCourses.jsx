@@ -4,11 +4,12 @@ import React, { useEffect } from "react";
 import { Card, CardHeader, Col, Row } from "reactstrap";
 import { selectCategories, Fetch, FetchCategories } from "../../../store/States/Categories"
 import { selectCourses, Fetch as FetchCourseAPI, FetchCourses } from "../../../store/States/Courses/"
+import { UpdateMainBuffer } from "store/States/Buffer"
 import { connect } from "react-redux"
 
 const courses = [{}, {}, {}, {}, {}];
 
-const MyCourses = ({ fetchCategories, categories, courses, fetchCourses }) => {
+const MyCourses = ({ fetchCategories, categories, courses, fetchCourses, UpdateMainBuffer }) => {
   useEffect(() => {
     fetchCategories()
   }, [fetchCategories])
@@ -27,7 +28,7 @@ const MyCourses = ({ fetchCategories, categories, courses, fetchCourses }) => {
             </CardHeader>
             <div className="categoriesContainer">
               {categories.map((item) => (
-                <CategoriesCard categoryName={item.name}/>
+                  <CategoriesCard categoryName={item.name} />
               ))}
             </div>
           </Card>
@@ -37,7 +38,7 @@ const MyCourses = ({ fetchCategories, categories, courses, fetchCourses }) => {
             <Row>
               {courses.map((course) => (
                 <Col md={3} sm={3} xs={12}>
-                  <CoursesCardTwo course={course} />
+                  <CoursesCardTwo course={course} onClick={(id) => UpdateMainBuffer({ selectedContent: id })} />
                 </Col>
               ))}
             </Row>
@@ -55,7 +56,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCategories: () => dispatch(Fetch(FetchCategories())),
-  fetchCourses: () => dispatch(FetchCourseAPI(FetchCourses()))
+  fetchCourses: () => dispatch(FetchCourseAPI(FetchCourses())),
+  UpdateMainBuffer: data => dispatch(UpdateMainBuffer(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCourses)

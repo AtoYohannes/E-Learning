@@ -1,23 +1,26 @@
 import Joi from "joi-browser";
 import React from "react";
 import { Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
-import ParentForm from "../../../../common/form";
+import ParentForm from "../../../../../common/form";
+import ReactPlayer from "react-player";
 
-class CategoryForm extends ParentForm {
+class ChaptersForm extends ParentForm {
   constructor(props) {
     super(props);
     this.initialState = {
+      type: "",
       data: {
-        id: "",
         name: "",
         image: "",
+        subtitle: "",
       },
       errors: {},
     };
     this.state = this.initialState;
     this.schema = {
-      id: Joi.string().allow("").optional(),
+      _id: Joi.string().allow("").optional(),
       name: Joi.string().min(2).max(50).required(),
+      subtitle: Joi.string().allow("").optional(),
       image: Joi.any().allow("").optional(),
     };
   }
@@ -26,9 +29,10 @@ class CategoryForm extends ParentForm {
     const updatedState = {
       ...this.state,
       data: {
-        id: data._id ? data._id : "",
+        _id: data._id ? data._id : "",
         name: data.name,
         image: data.image,
+        subtitle: data.subtitle,
       },
       lockUpdate: true,
     };
@@ -46,6 +50,7 @@ class CategoryForm extends ParentForm {
 
   doSubmit() {
     const { data } = this.state;
+
     this.props.submit(data);
   }
 
@@ -61,15 +66,28 @@ class CategoryForm extends ParentForm {
           <Form onSubmit={this.handleSubmit}>
             <Row>
               <Col md={12} sm={12} xs={12}>
-                {this.renderInput({
-                  name: "name",
-                  label: "Title",
+                {this.renderCheckbox({
+                  label: "Mandatory",
                 })}
+              </Col>
+              <Col md={2} sm={12} xs={12}>
+                {this.renderSelect({
+                  name: "type",
+                  label: "Content Type",
+                  options: ["PDF", "Video", "Reading"],
+                })}
+              </Col>
+              <Col md={10} sm={12} xs={12}>
+                <ReactPlayer
+                  width="100%"
+                  stopOnUnmount={false}
+                  url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                />
               </Col>
             </Row>
 
-            <CardFooter className="bg-background" align="center">
-              {this.renderButton("Save")}
+            <CardFooter className="bg-background" align="right">
+              {this.renderButton("Add")}
             </CardFooter>
           </Form>
         </CardBody>
@@ -77,4 +95,4 @@ class CategoryForm extends ParentForm {
     );
   }
 }
-export default CategoryForm;
+export default ChaptersForm;

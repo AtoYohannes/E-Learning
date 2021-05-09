@@ -5,6 +5,9 @@ const Universities = new StateArrayModel({ stateName: "universities_new" })
 Universities.setInitialState()
 
 Universities.setFetchBody("fetchUniversities")
+Universities.setAddBody("postUniversity")
+Universities.setEditBody("editUniversity")
+Universities.setDeleteBody("removeUniversity")
 
 Universities.createSlice()
 
@@ -17,7 +20,7 @@ export const {
 } = Universities.getEntity()
 
 export const {
-  Fetch, Add, Remove
+  Fetch, Add, Remove, Edit
 } = Universities.getAPIHandles()
 
 export const FetchUniversities = () => ({
@@ -31,6 +34,75 @@ export const FetchUniversities = () => ({
       updatedAt
     }
   }`,
+})
+
+export const AddUniversity = (name, description) => ({
+  query: `mutation($name: String!, $description: String!, $image: String!) {
+    postUniversity(UniversityInput: {
+      name: $name,
+      description: $description,
+      image: $image
+    }) {
+      _id
+      name
+      description
+      image
+      error {
+        type
+        message
+      }
+      createdAt
+      updatedAt
+    }
+  }`,
+  variables: {
+    name, description, image: "some"
+  }
+})
+
+export const EditUniversity = (id, name, description) => ({
+  query: `mutation($id: String!, $name: String!, $description: String!, $image: String!) {
+    editUniversity(UniversityEdit: {
+      _id: $id,
+      name: $name,
+      description: $description,
+      image: $image
+    }) {
+      _id
+      name
+      description
+      image
+      error {
+        type
+        message
+      }
+      createdAt
+      updatedAt
+    }
+  }`,
+  variables: {
+    name, description, image: "some", id
+  }
+})
+
+export const RemoveUniversity = (id) => ({
+  query: `mutation($id: String!) {
+    removeUniversity(_id: $id) {
+      _id
+      name
+      description
+      image
+      error {
+        type
+        message
+      }
+      createdAt
+      updatedAt
+    }
+  }`,
+  variables: {
+    id
+  }
 })
 
 export { selectData as selectUniversities }

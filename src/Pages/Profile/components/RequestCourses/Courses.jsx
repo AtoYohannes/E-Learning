@@ -3,12 +3,12 @@ import { initialState, reducer, _toggle } from "common/ModalOptions";
 import CoursesCardTwo from "Components/Card/CoursesCardTwo";
 import React, { useEffect, useReducer } from "react";
 import { Card, Col, Row } from "reactstrap";
-import { selectEnrollments } from "../../../../store/States/Enrollments"
+import { selectEnrollmentRequests } from "../../../../store/States/EnrollmentRequests"
 import { selectCourses } from "../../../../store/States/Courses"
 import { connect } from "react-redux"
-import { getEnrolledCourses } from "../../../../helpers/customResolvers"
+import { getRequestedCourses } from "../../../../helpers/customResolvers"
 
-const Courses = ({ doneAdd, doneEdit, courses, enrollments }) => {
+const Courses = ({ doneAdd, doneEdit, courses, enrollmentRequests }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollments }) => {
       <h5>Courses</h5>
       <hr />
       <Row>
-        {getEnrolledCourses("6095d13e5a4a30193a5d9472", enrollments, courses).map((course, index) => (
+        {getRequestedCourses("6095d13e5a4a30193a5d9472", enrollmentRequests, courses).map((course, index) => (
           <Col md={3} sm={12}>
             <CoursesCardTwo index={index} course={course} />
           </Col>
@@ -42,7 +42,7 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollments }) => {
 };
 
 const mapStateToProps = state => ({
-  enrollments: selectEnrollments(state),
+  enrollmentRequests: selectEnrollmentRequests(state),
   courses: selectCourses(state)
 })
 

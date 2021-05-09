@@ -7,7 +7,7 @@ import { Button, Card, Col, Row } from "reactstrap";
 import StudentsForm from "./StudentForm";
 
 const Students = ({
-  categorys,
+  students,
   doneAdd,
   doneEdit,
   addStudent,
@@ -18,8 +18,9 @@ const Students = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const columns = [
-    { path: "name", label: "Name" },
-    { path: "subtitle", label: "Subtitle" },
+    { path: "firstName", label: "First Name" },
+    { path: "lastName", label: "Last Name" },
+    { path: "email", label: "Email" },
     {
       key: "view",
       label: "Actions",
@@ -48,57 +49,6 @@ const Students = ({
             </icon>
             <small>
               <b>View</b>
-            </small>
-          </Button>
-          <Button
-            className="buttons"
-            size="sm"
-            color="warning"
-            onClick={() => {
-              _toggle(
-                {
-                  type: "EDIT",
-                  Component: StudentsForm,
-                  submit: editStudent,
-                  data: categorys,
-                  title: "Edit Students",
-                  options,
-                },
-                dispatch
-              );
-            }}
-          >
-            <icon>
-              <MdEdit />
-            </icon>
-            <small>
-              <b>Edit</b>
-            </small>
-          </Button>
-          <Button
-            className="buttons"
-            size="sm"
-            color="danger"
-            onClick={() => {
-              _toggle(
-                {
-                  type: "DELETE",
-                  deleteOptions: {
-                    okCallback: okDelete,
-                    title: "Are you sure?",
-                    id: categorys._id,
-                    message: "",
-                  },
-                },
-                dispatch
-              );
-            }}
-          >
-            <icon>
-              <MdDelete />
-            </icon>
-            <small>
-              <b>Delete</b>
             </small>
           </Button>
         </Row>
@@ -146,7 +96,7 @@ const Students = ({
           Add New Student
         </Button>
       </Col>
-      <CustomTable title="Students" columns={columns} data={categorys} />
+      <CustomTable title="Students" columns={columns} data={students} />
     </Card>
   );
 };

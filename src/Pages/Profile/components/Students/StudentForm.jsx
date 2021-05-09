@@ -3,12 +3,17 @@ import React from "react";
 import { Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 import ParentForm from "../../../../common/form";
 
-class FoodsForm extends ParentForm {
+class StudentForm extends ParentForm {
   constructor(props) {
     super(props);
     this.initialState = {
       data: {
-        name: "",
+        id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        numberOfCoursesEnrolled: 0,
+        numberOfCoursesCompleted: 0,
         image: "",
         subtitle: "",
       },
@@ -16,8 +21,12 @@ class FoodsForm extends ParentForm {
     };
     this.state = this.initialState;
     this.schema = {
-      _id: Joi.string().allow("").optional(),
-      name: Joi.string().min(2).max(50).required(),
+      id: Joi.string().allow("").optional(),
+      firstName: Joi.string().min(2).max(50).required(),
+      lastName: Joi.string().min(2).max(50).required(),
+      email: Joi.string().min(2).max(50).required(),
+      numberOfCoursesEnrolled: Joi.number().min(2).max(100).required(),
+      numberOfCoursesCompleted: Joi.number().min(2).max(100).required(),
       subtitle: Joi.string().allow("").optional(),
       image: Joi.any().allow("").optional(),
     };
@@ -27,8 +36,12 @@ class FoodsForm extends ParentForm {
     const updatedState = {
       ...this.state,
       data: {
-        _id: data._id ? data._id : "",
-        name: data.name,
+        id: data._id ? data._id : "",
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        numberOfCoursesEnrolled: data.numberOfCoursesEnrolled,
+        numberOfCoursesCompleted: data.numberOfCoursesCompleted,
         image: data.image,
         subtitle: data.subtitle,
       },
@@ -48,7 +61,6 @@ class FoodsForm extends ParentForm {
 
   doSubmit() {
     const { data } = this.state;
-
     this.props.submit(data);
   }
 
@@ -65,15 +77,34 @@ class FoodsForm extends ParentForm {
             <Row>
               <Col md={12} sm={12} xs={12}>
                 {this.renderInput({
-                  name: "name",
-                  label: "Title",
+                  name: "firstName",
+                  label: "First Name",
                 })}
               </Col>
               <Col md={12} sm={12} xs={12}>
                 {this.renderInput({
-                  name: "subtitle",
-                  label: "Subtitle (optional)",
-                  type: "textarea",
+                  name: "lastName",
+                  label: "Last Name",
+                })}
+              </Col>
+              <Col md={12} sm={12} xs={12}>
+                {this.renderInput({
+                  name: "email",
+                  label: "Email",
+                })}
+              </Col>
+              <Col md={12} sm={12} xs={12}>
+                {this.renderInput({
+                  name: "numberOfCoursesEnrolled",
+                  label: "Number of Courses Enrolled",
+                  type: "number",
+                })}
+              </Col>
+              <Col md={12} sm={12} xs={12}>
+                {this.renderInput({
+                  name: "numberOfCoursesCompleted",
+                  label: "Number of courses completed",
+                  type: "number",
                 })}
               </Col>
             </Row>
@@ -87,4 +118,4 @@ class FoodsForm extends ParentForm {
     );
   }
 }
-export default FoodsForm;
+export default StudentForm;

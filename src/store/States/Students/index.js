@@ -1,50 +1,49 @@
 import StateArrayModel from "../../../wrappers/StateModels/StateArrayModelGQL"
 
-const Teachers = new StateArrayModel({ stateName: "teachers_new" })
+const Students = new StateArrayModel({ stateName: "students_new" })
 
-Teachers.setInitialState()
-Teachers.setFetchBody("fetchTeachers")
-Teachers.setAddBody("postTeacher")
-Teachers.setEditBody("editTeacher")
-Teachers.setDeleteBody("removeTeacher")
+Students.setInitialState()
+Students.setFetchBody("fetchStudents")
+Students.setAddBody("postStudent")
+Students.setEditBody("editStudent")
+Students.setDeleteBody("removeStudent")
 
-Teachers.createSlice()
+Students.createSlice()
 
 export const {
   selectAddStatus, selectFetchStatus, selectEditStatus, selectDeleteStatus, selectData
-} = Teachers.getSelectors()
+} = Students.getSelectors()
 
 export const {
   stateName, reducer
-} = Teachers.getEntity()
+} = Students.getEntity()
 
 export const {
   Fetch, Add, Remove, Edit
-} = Teachers.getAPIHandles()
+} = Students.getAPIHandles()
 
-export const FetchTeachers = () => ({
+export const FetchStudents = () => ({
   query: `query {
-    fetchTeachers {
+    fetchStudents {
       _id
       firstName
       lastName
       email
-      qualification
-      briefIntroduction
-      image
+      numberOfCoursesEnrolled
+      numberOfCoursesCompleted
       createdAt
       updatedAt
     }
   }`,
 })
 
-export const AddTeacher = ({
+export const AddStudent = ({
   firstName, lastName, email, qualification, briefIntroduction
 }) => ({
   query: `mutation(
     $firstName: String!, $lastName: String!, $email: String!, $qualification: String!, $briefIntroduction: String!
   ) {
-    postTeacher(TeacherInput: {
+    postStudent(StudentInput: {
       firstName: $firstName,
       lastName: $lastName,
       email: $email,
@@ -72,14 +71,14 @@ export const AddTeacher = ({
   }
 })
 
-export const EditTeacher = ({
+export const EditStudent = ({
   id, firstName, lastName, email, qualification, briefIntroduction
 }) => ({
   query: `mutation(
     $id: String!, $firstName: String!, $lastName: String!, $email: String!,
     $qualification: String!, $briefIntroduction: String!
   ) {
-    editTeacher(TeacherEdit: {
+    editStudent(StudentEdit: {
       _id: $id,
       firstName: $firstName,
       lastName: $lastName,
@@ -108,9 +107,9 @@ export const EditTeacher = ({
   }
 })
 
-export const RemoveTeacher = (id) => ({
+export const RemoveStudent = (id) => ({
   query: `mutation($id: String!) {
-    removeTeacher(_id: $id) {
+    removeStudent(_id: $id) {
       _id
       firstName
       lastName
@@ -131,4 +130,4 @@ export const RemoveTeacher = (id) => ({
   }
 })
 
-export { selectData as selectTeachers }
+export { selectData as selectStudents }

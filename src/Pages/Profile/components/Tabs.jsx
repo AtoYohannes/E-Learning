@@ -11,12 +11,13 @@ import {
 import CoursesCard from "../../../Components/Card/CoursesCard";
 import Categories from "./Categories";
 import Courses from "./Courses";
+import RequestingCourses from "./RequestCourses"
 import Schools from "./Schools";
 import Students from "./Students";
 import Teachers from "./Teachers";
 
 const Tabs = (props) => {
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeTab, setActiveTab] = useState("0");
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -29,12 +30,22 @@ const Tabs = (props) => {
       <Nav tabs>
         <NavItem>
           <NavLink
+            className={activeTab === "0" ? "activepageTab" : "notactivepageTab"}
+            onClick={() => {
+              toggle("0");
+            }}
+          >
+            Requested Courses
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
             className={activeTab === "1" ? "activepageTab" : "notactivepageTab"}
             onClick={() => {
               toggle("1");
             }}
           >
-            Courses
+            New Enrolled Courses
           </NavLink>
         </NavItem>
         <NavItem>
@@ -99,6 +110,9 @@ const Tabs = (props) => {
         </NavItem>
       </Nav>
       <TabContent className="mt-3" activeTab={activeTab}>
+        <TabPane tabId="0">
+          <RequestingCourses />
+        </TabPane>
         <TabPane tabId="1">
           <Courses />
         </TabPane>

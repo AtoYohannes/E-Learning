@@ -8,7 +8,12 @@ class TeacherForm extends ParentForm {
     super(props);
     this.initialState = {
       data: {
-        name: "",
+        id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        briefIntroduction: "",
+        qualification: "",
         image: "",
         subtitle: "",
       },
@@ -16,8 +21,12 @@ class TeacherForm extends ParentForm {
     };
     this.state = this.initialState;
     this.schema = {
-      _id: Joi.string().allow("").optional(),
-      name: Joi.string().min(2).max(50).required(),
+      id: Joi.string().allow("").optional(),
+      firstName: Joi.string().min(2).max(50).required(),
+      lastName: Joi.string().min(2).max(50).required(),
+      email: Joi.string().min(2).max(50).required(),
+      briefIntroduction: Joi.string().min(2).max(100).required(),
+      qualification: Joi.string().min(2).max(100).required(),
       subtitle: Joi.string().allow("").optional(),
       image: Joi.any().allow("").optional(),
     };
@@ -27,8 +36,12 @@ class TeacherForm extends ParentForm {
     const updatedState = {
       ...this.state,
       data: {
-        _id: data._id ? data._id : "",
-        name: data.name,
+        id: data._id ? data._id : "",
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        briefIntroduction: data.briefIntroduction,
+        qualification: data.qualification,
         image: data.image,
         subtitle: data.subtitle,
       },
@@ -48,7 +61,6 @@ class TeacherForm extends ParentForm {
 
   doSubmit() {
     const { data } = this.state;
-
     this.props.submit(data);
   }
 
@@ -65,14 +77,33 @@ class TeacherForm extends ParentForm {
             <Row>
               <Col md={12} sm={12} xs={12}>
                 {this.renderInput({
-                  name: "name",
-                  label: "Title",
+                  name: "firstName",
+                  label: "First Name",
                 })}
               </Col>
               <Col md={12} sm={12} xs={12}>
                 {this.renderInput({
-                  name: "subtitle",
-                  label: "Subtitle (optional)",
+                  name: "lastName",
+                  label: "Last Name",
+                })}
+              </Col>
+              <Col md={12} sm={12} xs={12}>
+                {this.renderInput({
+                  name: "email",
+                  label: "Email",
+                })}
+              </Col>
+              <Col md={12} sm={12} xs={12}>
+                {this.renderInput({
+                  name: "qualification",
+                  label: "Qualification",
+                  type: "textarea",
+                })}
+              </Col>
+              <Col md={12} sm={12} xs={12}>
+                {this.renderInput({
+                  name: "briefIntroduction",
+                  label: "Brief Introduction",
                   type: "textarea",
                 })}
               </Col>

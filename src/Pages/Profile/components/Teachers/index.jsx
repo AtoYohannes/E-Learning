@@ -3,16 +3,10 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import {
-  Add,
-  Edit,
-  Fetch,
-  Remove,
-  selectAddStatus,
-  selectCategories,
-  selectDeleteStatus,
-  selectEditStatus,
-  selectFetchStatus,
-} from "store/Categories";
+  Add, Edit, Fetch, Remove,
+  selectAddStatus, selectDeleteStatus, selectEditStatus, selectFetchStatus, selectTeachers,
+  AddTeacher, EditTeacher, RemoveTeacher
+} from "../../../../store/States/Teachers";
 import Teachers from "./Teachers";
 
 const Loader = ({
@@ -23,8 +17,8 @@ const Loader = ({
   editStatus,
   editTeacher,
   deleteStatus,
-  deleteTeacher,
-  students,
+  removeTeacher,
+  teachers,
 }) => {
   const [data, setData] = useState([]);
   const [fetchLock, setFetchLock] = useState(true);
@@ -33,13 +27,13 @@ const Loader = ({
   const [deleteLock, setDeleteLock] = useState(true);
 
   useEffect(() => {
-    setData(students);
-  }, [students, setData]);
+    setData(teachers);
+  }, [teachers, setData]);
 
-  useEffect(() => {
-    setFetchLock(false);
-    fetchTeachers();
-  }, [fetchTeachers, setFetchLock]);
+  // useEffect(() => {
+  //   setFetchLock(false);
+  //   fetchTeachers();
+  // }, [fetchTeachers, setFetchLock]);
 
   useEffect(() => {
     const { status } = fetchStatus;
@@ -81,25 +75,17 @@ const Loader = ({
 
   const _addTeacher = (data) => {
     setAddLock(false);
-    const formData = new FormData();
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
-    addTeacher(formData);
+    addTeacher(data)
   };
 
   const _editTeacher = (data) => {
     setEditLock(false);
-    const formData = new FormData();
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
-    editTeacher(formData);
+    editTeacher(data)
   };
 
   const _deleteTeacher = (id) => {
     setDeleteLock(false);
-    deleteTeacher(id);
+    removeTeacher(id)
   };
   return (
     <Teachers
@@ -109,7 +95,7 @@ const Loader = ({
       editTeacher={_editTeacher}
       doneDelete={deleteStatus.status === reduxStatus.success && !deleteLock}
       deleteTeacher={_deleteTeacher}
-      students={data}
+      teachers={data}
     />
   );
 };
@@ -120,14 +106,13 @@ const mapStateToProps = (state, ownProps) => ({
   addStatus: selectAddStatus(state),
   editStatus: selectEditStatus(state),
   deleteStatus: selectDeleteStatus(state),
-  students: selectCategories(state),
+  teachers: selectTeachers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchTeachers: () => dispatch(Fetch()),
-  addTeacher: (data) => dispatch(Add(data)),
-  editTeacher: (data) => dispatch(Edit(data)),
-  deleteTeacher: (id) => dispatch(Remove(id)),
+  addTeacher: (data) => dispatch(Add(AddTeacher(data))),
+  editTeacher: (data) => dispatch(Edit(EditTeacher(data))),
+  removeTeacher: (id) => dispatch(Remove(RemoveTeacher(id))),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loader);

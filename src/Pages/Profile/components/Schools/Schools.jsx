@@ -7,19 +7,19 @@ import { Button, Card, Col, Row } from "reactstrap";
 import SchoolsForm from "./SchoolsForm";
 
 const Schools = ({
-  schools,
   doneAdd,
   doneEdit,
-  addSchool,
-  editSchool,
   deleteSchool,
-  doneDelete,
   options,
+  universities,
+  addUniversity,
+  editUniversity,
+  removeUniversity
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const columns = [
     { path: "name", label: "Name" },
-    { path: "subtitle", label: "Subtitle" },
+    { path: "description", label: "Subtitle" },
     {
       key: "view",
       label: "Actions",
@@ -59,7 +59,7 @@ const Schools = ({
                 {
                   type: "EDIT",
                   Component: SchoolsForm,
-                  submit: editSchool,
+                  submit: editUniversity,
                   data: schools,
                   title: "Edit Schools",
                   options,
@@ -80,6 +80,7 @@ const Schools = ({
             size="sm"
             color="danger"
             onClick={() => {
+              removeUniversity(schools._id)
               _toggle(
                 {
                   type: "DELETE",
@@ -133,8 +134,8 @@ const Schools = ({
               {
                 type: "ADD",
                 Component: SchoolsForm,
-                submit: addSchool,
-                title: "New Schools",
+                submit: addUniversity,
+                title: "New School",
                 size: "md",
                 options,
               },
@@ -146,9 +147,9 @@ const Schools = ({
           Add New School
         </Button>
       </Col>
-      <CustomTable title="Schools" columns={columns} data={schools} />
+      <CustomTable title="Schools" columns={columns} data={universities} />
     </Card>
   );
 };
 
-export default Schools;
+export default Schools

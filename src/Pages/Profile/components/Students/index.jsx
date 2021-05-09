@@ -3,22 +3,14 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import {
-  Add,
-  Edit,
-  Fetch,
-  Remove,
-  selectAddStatus,
-  selectCategories,
-  selectDeleteStatus,
-  selectEditStatus,
-  selectFetchStatus,
-} from "store/Categories";
+  Add, Edit, Fetch, Remove,
+  selectAddStatus, selectStudents, selectDeleteStatus, selectEditStatus, selectFetchStatus,
+} from "../../../../store/States/Students";
 import Students from "./Students";
 
 const Loader = ({
   fetchStatus,
   addStatus,
-  fetchStudents,
   addStudent,
   editStatus,
   editStudent,
@@ -35,11 +27,6 @@ const Loader = ({
   useEffect(() => {
     setData(students);
   }, [students, setData]);
-
-  useEffect(() => {
-    setFetchLock(false);
-    fetchStudents();
-  }, [fetchStudents, setFetchLock]);
 
   useEffect(() => {
     const { status } = fetchStatus;
@@ -81,25 +68,14 @@ const Loader = ({
 
   const _addStudent = (data) => {
     setAddLock(false);
-    const formData = new FormData();
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
-    addStudent(formData);
   };
 
   const _editStudent = (data) => {
     setEditLock(false);
-    const formData = new FormData();
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
-    editStudent(formData);
   };
 
   const _deleteStudent = (id) => {
     setDeleteLock(false);
-    deleteStudent(id);
   };
   return (
     <Students
@@ -120,14 +96,10 @@ const mapStateToProps = (state, ownProps) => ({
   addStatus: selectAddStatus(state),
   editStatus: selectEditStatus(state),
   deleteStatus: selectDeleteStatus(state),
-  students: selectCategories(state),
+  students: selectStudents(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchStudents: () => dispatch(Fetch()),
-  addStudent: (data) => dispatch(Add(data)),
-  editStudent: (data) => dispatch(Edit(data)),
-  deleteStudent: (id) => dispatch(Remove(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loader);

@@ -2,31 +2,21 @@ import { reduxStatus } from "constants/reduxStatus";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import Categories from "./Categories";
 import {
-  Add,
-  Edit,
-  Fetch,
-  Remove,
-  selectAddStatus,
-  selectCategories,
-  selectDeleteStatus,
-  selectEditStatus,
-  selectFetchStatus,
-} from "store/Categories";
-import Categorys from "./Categorys";
+  selectCategories, selectAddStatus, selectEditStatus, selectDeleteStatus, selectFetchStatus,
+  Add, Fetch, Edit, Remove, FetchCategories, AddCategory, EditCategory, RemoveCategory
+} from "../../../../store/States/Categories"
 
 const Loader = ({
   fetchStatus,
   addStatus,
-  fetchCategorys,
   addCategory,
   editStatus,
   editCategory,
   deleteStatus,
-  deleteCategory,
-  categorys,
+  removeCategory,
   categories,
-  selectedRestaurant,
 }) => {
   const [data, setData] = useState([]);
   const [fetchLock, setFetchLock] = useState(true);
@@ -35,13 +25,12 @@ const Loader = ({
   const [deleteLock, setDeleteLock] = useState(true);
 
   useEffect(() => {
-    setData(categorys);
-  }, [categorys, setData]);
+    setData(categories);
+  }, [categories, setData]);
 
   useEffect(() => {
     setFetchLock(false);
-    fetchCategorys();
-  }, [fetchCategorys, setFetchLock]);
+  }, [setFetchLock]);
 
   useEffect(() => {
     const { status } = fetchStatus;
@@ -81,37 +70,29 @@ const Loader = ({
     }
   }, [deleteStatus, setDeleteLock, deleteLock]);
 
-  const _addCategory = (data) => {
+  const _addCategory = ({ name }) => {
+    addCategory(name)
     setAddLock(false);
-    const formData = new FormData();
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
-    addCategory(formData);
   };
 
-  const _editCategory = (data) => {
+  const _editCategory = ({ id, name }) => {
     setEditLock(false);
-    const formData = new FormData();
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
-    editCategory(formData);
+    editCategory(id, name)
   };
 
   const _deleteCategory = (id) => {
     setDeleteLock(false);
-    deleteCategory(id);
+    removeCategory(id)
   };
   return (
-    <Categorys
+    <Categories
       doneAdd={addStatus.status === reduxStatus.success && !addLock}
       addCategory={_addCategory}
       doneEdit={editStatus.status === reduxStatus.success && !editLock}
       editCategory={_editCategory}
       doneDelete={deleteStatus.status === reduxStatus.success && !deleteLock}
       deleteCategory={_deleteCategory}
-      categorys={data}
+      categories={data}
     />
   );
 };
@@ -122,14 +103,14 @@ const mapStateToProps = (state, ownProps) => ({
   addStatus: selectAddStatus(state),
   editStatus: selectEditStatus(state),
   deleteStatus: selectDeleteStatus(state),
-  categorys: selectCategories(state),
+  categories: selectCategories(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCategorys: () => dispatch(Fetch()),
-  addCategory: (data) => dispatch(Add(data)),
-  editCategory: (data) => dispatch(Edit(data)),
-  deleteCategory: (id) => dispatch(Remove(id)),
+  fetchCategories: () => dispatch(Fetch(FetchCategories())),
+  addCategory: (name) => dispatch(Add(AddCategory(name))),
+  editCategory: (id, name) => dispatch(Edit(EditCategory(id, name))),
+  removeCategory: (id) => dispatch(Remove(RemoveCategory(id))),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loader);

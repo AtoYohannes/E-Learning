@@ -2,22 +2,31 @@ import { reduxStatus } from "constants/reduxStatus";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import Schools from "./Schools";
 import {
-  Add, AddUniversity, selectAddStatus, selectFetchStatus, selectUniversities,
-  EditUniversity, Edit, selectEditStatus, RemoveUniversity, Remove, selectDeleteStatus
-} from "../../../../store/States/Universities"
+  Add,
+  Edit,
+  Fetch,
+  Remove,
+  selectAddStatus,
+  selectCategories,
+  selectDeleteStatus,
+  selectEditStatus,
+  selectFetchStatus,
+} from "store/Categories";
+import Courses from "./Courses";
 
 const Loader = ({
   fetchStatus,
   addStatus,
-  students,
-  universities,
-  addUniversity,
+  fetchCourses,
+  addCourse,
   editStatus,
-  editUniversity,
-  removeUniversity,
-  deleteStatus
+  editCourse,
+  deleteStatus,
+  deleteCourse,
+  categorys,
+  categories,
+  selectedRestaurant,
 }) => {
   const [data, setData] = useState([]);
   const [fetchLock, setFetchLock] = useState(true);
@@ -26,13 +35,18 @@ const Loader = ({
   const [deleteLock, setDeleteLock] = useState(true);
 
   useEffect(() => {
-    setData(students);
-  }, [students, setData]);
+    setData(categorys);
+  }, [categorys, setData]);
+
+  useEffect(() => {
+    setFetchLock(false);
+    fetchCourses();
+  }, [fetchCourses, setFetchLock]);
 
   useEffect(() => {
     const { status } = fetchStatus;
     if (status === reduxStatus.failure && !fetchLock) {
-      toast.error("Failed fetching Students");
+      toast.error("Failed fetching Courses");
       setFetchLock(true);
     }
   }, [fetchStatus, setFetchLock, fetchLock]);
@@ -42,7 +56,7 @@ const Loader = ({
     if (status === reduxStatus.failure && !addLock) {
       setAddLock(true);
     } else if (status === reduxStatus.success && !addLock) {
-      toast.success("Added University");
+      toast.success("Added Course");
       setAddLock(true);
     }
   }, [addStatus, setAddLock, addLock]);
@@ -52,7 +66,7 @@ const Loader = ({
     if (status === reduxStatus.failure && !editLock) {
       setEditLock(true);
     } else if (status === reduxStatus.success && !editLock) {
-      toast.success("Edited University");
+      toast.success("Edited Course");
       setEditLock(true);
     }
   }, [editStatus, setEditLock, editLock]);
@@ -62,35 +76,42 @@ const Loader = ({
     if (status === reduxStatus.failure && !deleteLock) {
       setDeleteLock(true);
     } else if (status === reduxStatus.success && !deleteLock) {
-      toast.success("Deleted University");
+      toast.success("Deleted Course");
       setDeleteLock(true);
     }
   }, [deleteStatus, setDeleteLock, deleteLock]);
 
-  const _addUniversity = ({ name, description }) => {
+  const _addCourse = (data) => {
     setAddLock(false);
-    addUniversity(name, description);
+    const formData = new FormData();
+    for (var key in data) {
+      formData.append(key, data[key]);
+    }
+    addCourse(formData);
   };
 
-  const _editUniversity = ({ id, name, description }) => {
+  const _editCourse = (data) => {
     setEditLock(false);
-    editUniversity(id, name, description);
+    const formData = new FormData();
+    for (var key in data) {
+      formData.append(key, data[key]);
+    }
+    editCourse(formData);
   };
 
-  const _removeUniversity = (id) => {
-    setEditLock(false);
-    removeUniversity(id);
+  const _deleteCourse = (id) => {
+    setDeleteLock(false);
+    deleteCourse(id);
   };
-
   return (
-    <Schools
+    <Courses
       doneAdd={addStatus.status === reduxStatus.success && !addLock}
+      addCourse={_addCourse}
       doneEdit={editStatus.status === reduxStatus.success && !editLock}
+      editCourse={_editCourse}
       doneDelete={deleteStatus.status === reduxStatus.success && !deleteLock}
-      addUniversity={_addUniversity}
-      editUniversity={_editUniversity}
-      removeUniversity={_removeUniversity}
-      universities={universities}
+      deleteCourse={_deleteCourse}
+      categorys={data}
     />
   );
 };
@@ -99,15 +120,16 @@ const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
   fetchStatus: selectFetchStatus(state),
   addStatus: selectAddStatus(state),
-  universities: selectUniversities(state),
   editStatus: selectEditStatus(state),
-  deleteStatus: selectDeleteStatus(state)
+  deleteStatus: selectDeleteStatus(state),
+  categorys: selectCategories(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addUniversity: (name, description) => dispatch(Add(AddUniversity(name, description))),
-  editUniversity: (id, name, description) => dispatch(Edit(EditUniversity(id, name, description))),
-  removeUniversity: (id) => dispatch(Remove(RemoveUniversity(id))),
+  fetchCourses: () => dispatch(Fetch()),
+  addCourse: (data) => dispatch(Add(data)),
+  editCourse: (data) => dispatch(Edit(data)),
+  deleteCourse: (id) => dispatch(Remove(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loader);

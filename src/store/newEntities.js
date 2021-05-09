@@ -4,6 +4,9 @@ import { stateName as university, reducer as UniversityReducer } from "./States/
 import { stateName as teacher, reducer as TeacherReducer } from "./States/Teachers"
 import { stateName as buffer, reducer as BufferReducer } from "./States/Buffer"
 import { stateName as chapter, reducer as ChapterReducer } from "./States/Chapters"
+import { stateName as enrollment_request, reducer as EnrollmentRequestReducer } from "./States/EnrollmentRequests"
+import { stateName as enrollment, reducer as EnrollmentReducer } from "./States/Enrollments"
+import { stateName as student, reducer as StudentReducer } from "./States/Students"
 
 export default {
   [category]: CategoryReducer,
@@ -11,5 +14,8 @@ export default {
   [university]: UniversityReducer,
   [teacher]: TeacherReducer,
   [buffer]: BufferReducer,
-  [chapter]: ChapterReducer
+  [chapter]: ChapterReducer,
+  [enrollment_request]: EnrollmentRequestReducer,
+  [enrollment]: EnrollmentReducer,
+  [student]: StudentReducer
 }

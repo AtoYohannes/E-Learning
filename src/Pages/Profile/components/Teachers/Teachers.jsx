@@ -7,7 +7,7 @@ import { Button, Card, Col, Row } from "reactstrap";
 import TeachersForm from "./TeachersForm";
 
 const Teachers = ({
-  categorys,
+  teachers,
   doneAdd,
   doneEdit,
   addTeacher,
@@ -18,12 +18,13 @@ const Teachers = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const columns = [
-    { path: "name", label: "Name" },
-    { path: "subtitle", label: "Subtitle" },
+    { path: "firstName", label: "First Name" },
+    { path: "lastName", label: "Last Name" },
+    { path: "email", label: "Email" },
     {
       key: "view",
       label: "Actions",
-      content: (categorys) => (
+      content: (teacher) => (
         <Row>
           <Button
             className="buttons"
@@ -34,7 +35,7 @@ const Teachers = ({
                 {
                   type: "VIEW",
                   Component: TeachersForm,
-                  data: categorys,
+                  data: teacher,
                   title: "View Teachers",
                   options,
                 },
@@ -60,7 +61,7 @@ const Teachers = ({
                   type: "EDIT",
                   Component: TeachersForm,
                   submit: editTeacher,
-                  data: categorys,
+                  data: teacher,
                   title: "Edit Teachers",
                   options,
                 },
@@ -80,13 +81,14 @@ const Teachers = ({
             size="sm"
             color="danger"
             onClick={() => {
+              deleteTeacher(teacher._id)
               _toggle(
                 {
                   type: "DELETE",
                   deleteOptions: {
                     okCallback: okDelete,
                     title: "Are you sure?",
-                    id: categorys._id,
+                    id: teacher._id,
                     message: "",
                   },
                 },
@@ -134,7 +136,7 @@ const Teachers = ({
                 type: "ADD",
                 Component: TeachersForm,
                 submit: addTeacher,
-                title: "New Teachers",
+                title: "New Teacher",
                 size: "md",
                 options,
               },
@@ -146,7 +148,7 @@ const Teachers = ({
           Add New Teacher
         </Button>
       </Col>
-      <CustomTable title="Teachers" columns={columns} data={categorys} />
+      <CustomTable title="Teachers" columns={columns} data={teachers} />
     </Card>
   );
 };

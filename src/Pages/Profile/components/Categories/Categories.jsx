@@ -4,10 +4,10 @@ import CustomTable from "common/table";
 import React, { useEffect, useReducer } from "react";
 import { MdDelete, MdEdit, MdRemoveRedEye } from "react-icons/md";
 import { Button, Card, Col, Row } from "reactstrap";
-import CategorysForm from "./CategoryForm";
+import CategoryForm from "./CategoryForm";
 
-const Categorys = ({
-  categorys,
+const Categories = ({
+  categories,
   doneAdd,
   doneEdit,
   addCategory,
@@ -19,11 +19,10 @@ const Categorys = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const columns = [
     { path: "name", label: "Name" },
-    { path: "subtitle", label: "Subtitle" },
     {
       key: "view",
       label: "Actions",
-      content: (categorys) => (
+      content: (category) => (
         <Row>
           <Button
             className="buttons"
@@ -33,9 +32,9 @@ const Categorys = ({
               _toggle(
                 {
                   type: "VIEW",
-                  Component: CategorysForm,
-                  data: categorys,
-                  title: "View Categorys",
+                  Component: CategoryForm,
+                  data: category,
+                  title: "View Category",
                   options,
                 },
                 dispatch
@@ -58,10 +57,10 @@ const Categorys = ({
               _toggle(
                 {
                   type: "EDIT",
-                  Component: CategorysForm,
+                  Component: CategoryForm,
                   submit: editCategory,
-                  data: categorys,
-                  title: "Edit Categorys",
+                  data: category,
+                  title: "Edit Category",
                   options,
                 },
                 dispatch
@@ -80,13 +79,14 @@ const Categorys = ({
             size="sm"
             color="danger"
             onClick={() => {
+              deleteCategory(category._id)
               _toggle(
                 {
                   type: "DELETE",
                   deleteOptions: {
                     okCallback: okDelete,
                     title: "Are you sure?",
-                    id: categorys._id,
+                    id: category._id,
                     message: "",
                   },
                 },
@@ -132,9 +132,9 @@ const Categorys = ({
             _toggle(
               {
                 type: "ADD",
-                Component: CategorysForm,
+                Component: CategoryForm,
                 submit: addCategory,
-                title: "New Categorys",
+                title: "New Category",
                 size: "md",
                 options,
               },
@@ -146,9 +146,9 @@ const Categorys = ({
           Add New Category
         </Button>
       </Col>
-      <CustomTable title="Categorys" columns={columns} data={categorys} />
+      <CustomTable title="Categories" columns={columns} data={categories} />
     </Card>
   );
 };
 
-export default Categorys;
+export default Categories;

@@ -8,6 +8,7 @@ class FoodsForm extends ParentForm {
     super(props);
     this.initialState = {
       data: {
+        _id: "",
         name: "",
         image: "",
         subtitle: "",
@@ -30,7 +31,7 @@ class FoodsForm extends ParentForm {
         _id: data._id ? data._id : "",
         name: data.name,
         image: data.image,
-        subtitle: data.subtitle,
+        subtitle: data.description,
       },
       lockUpdate: true,
     };
@@ -48,8 +49,11 @@ class FoodsForm extends ParentForm {
 
   doSubmit() {
     const { data } = this.state;
-
-    this.props.submit(data);
+    this.props.submit({
+      id: data._id,
+      name: data.name,
+      description: data.subtitle
+    });
   }
 
   handleImageDrop = (image) => {

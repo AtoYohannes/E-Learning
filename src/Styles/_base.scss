@@ -53,3 +53,24 @@ button,
 .cr-app-body {
   margin-top: 70px;
 }
+
+.courseBodyFooters {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  button {
+    font-size: 15px;
+    font-weight: bolder;
+    padding: 5px 50px;
+  }
+}
+
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  input {
+    font-size: 12px;
+  }
+}

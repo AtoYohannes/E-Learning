@@ -1,19 +1,7 @@
+import ParentForm from "common/form";
 import Joi from "joi-browser";
 import React from "react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Col,
-  Form,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-} from "reactstrap";
-import ParentForm from "common/form";
+import { Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 
 class SignUp extends ParentForm {
   constructor(props) {
@@ -108,7 +96,7 @@ class SignUp extends ParentForm {
                 {this.renderInput({
                   name: "password",
                   label: "Password",
-                  type: "password"
+                  type: "password",
                 })}
               </Col>
             </Row>

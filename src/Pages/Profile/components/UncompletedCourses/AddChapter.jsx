@@ -1,18 +1,6 @@
 import Joi from "joi-browser";
 import React from "react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Col,
-  Form,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 import ParentForm from "../../../../common/form";
 
 class UncompleteCourseForm extends ParentForm {
@@ -26,7 +14,7 @@ class UncompleteCourseForm extends ParentForm {
         courseID: "",
         numberOfReading: "",
         numberOfVideos: "",
-        numberOfAssignments: ""
+        numberOfAssignments: "",
       },
       errors: {},
     };
@@ -101,11 +89,11 @@ class UncompleteCourseForm extends ParentForm {
                 {this.renderSelect({
                   name: "courseID",
                   label: "Course",
-                  options: this.props.options.courses.map(course => ({
+                  options: this.props.options.courses.map((course) => ({
                     ...course,
-                    name: course.title
+                    name: course.title,
                   })),
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
@@ -119,7 +107,7 @@ class UncompleteCourseForm extends ParentForm {
                 {this.renderInput({
                   name: "numberOfVideos",
                   label: "Number of Videos",
-                  type: "number"
+                  type: "number",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>

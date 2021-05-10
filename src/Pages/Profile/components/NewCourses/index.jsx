@@ -3,9 +3,15 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import {
-  Add, Edit, Fetch, Remove,
-  selectAddStatus, selectDeleteStatus, selectEditStatus, selectFetchStatus,
-  FetchCourses, AddCourse, selectCourses
+  Add,
+  AddCourse,
+  Fetch,
+  FetchCourses,
+  selectAddStatus,
+  selectCourses,
+  selectDeleteStatus,
+  selectEditStatus,
+  selectFetchStatus,
 } from "store/States/Courses";
 import { selectUnVerifiedCourses } from "store/States/UnCompletedCourses"
 import { selectEnrollments } from "../../../../store/States/Enrollments"
@@ -90,7 +96,7 @@ const Loader = ({
 
   const _addCourse = (data) => {
     setAddLock(false);
-    
+
     addCourse(data);
   };
 

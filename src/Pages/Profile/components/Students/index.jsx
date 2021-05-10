@@ -3,8 +3,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import {
-  Add, Edit, Fetch, Remove,
-  selectAddStatus, selectStudents, selectDeleteStatus, selectEditStatus, selectFetchStatus,
+  selectAddStatus,
+  selectDeleteStatus,
+  selectEditStatus,
+  selectFetchStatus,
+  selectStudents,
 } from "../../../../store/States/Students";
 import Students from "./Students";
 
@@ -99,7 +102,6 @@ const mapStateToProps = (state, ownProps) => ({
   students: selectStudents(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loader);

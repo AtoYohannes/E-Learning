@@ -164,7 +164,7 @@ class Header extends React.Component {
                     }}
                   />
                 </NavLink>
-                <NavLink>
+                {/* <NavLink>
                 <RenderButton
                     title={"Home"}
                     outline
@@ -174,7 +174,7 @@ class Header extends React.Component {
                       setRedirect("/")
                     }}
                   />
-                </NavLink>
+                </NavLink> */}
               </NavItem>
               {/* {
                 !this.props.isAuthenticated ? (
@@ -197,18 +197,7 @@ class Header extends React.Component {
                 this.props.isAuthenticated ? (
                   <></>
                 ) :
-                  (
-                    <NavItem>
-                    <Link to="/login-register">
-                      <NavLink>
-                        <RenderButton
-                          title="Getting Started"
-                          // onClick={() => this.props.toggle("signUp")}
-                        />
-                      </NavLink>
-                    </Link>
-                  </NavItem>
-                  )
+                  <></>
               }
               <NavItem>
                 <NavLink id="Popover2">

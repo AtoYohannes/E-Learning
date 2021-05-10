@@ -6,15 +6,12 @@ import {
   CardFooter,
   Col,
   Form,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
+
+
+
+  Row
 } from "reactstrap";
 import ParentForm from "../../../../common/form";
-import Chapters from "./chapters/chapters";
 
 class FoodsForm extends ParentForm {
   constructor(props) {

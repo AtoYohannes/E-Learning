@@ -17,6 +17,7 @@ import { AuthenticateUser, SetUserDetails, setUserID } from "store/States/User";
 import { UpdateMainBuffer } from "store/States/Buffer/";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import Logo from "../../Assets/logo_transparent.png";
 
 const SignUp = ({ AuthenticateUser, SetUserDetails, setUserID }) => {
   const [userInfo, setUserInfo] = useState({
@@ -31,28 +32,34 @@ const SignUp = ({ AuthenticateUser, SetUserDetails, setUserID }) => {
   const _postUser = async () => {
     await UploadImage(file, (imageAddress) => {
       callAPI(AddStudent(userInfo), "postStudent", (studentData) => {
-        callAPI(PostUser({
-          ...userInfo,
-          image: imageAddress,
-          externalID: studentData._id
-        }), "postUser", (userData) => {
-          AuthenticateUser()
-          SetUserDetails(userData)
-          setUserID(userData._id)
-          UpdateMainBuffer({ studentData })
-          window.location.reload()
-        })
-      })
-    })
-  }
-  return redirect.length > 0 ? <Redirect to={redirect} /> : (
+        callAPI(
+          PostUser({
+            ...userInfo,
+            image: imageAddress,
+            externalID: studentData._id,
+          }),
+          "postUser",
+          (userData) => {
+            AuthenticateUser();
+            SetUserDetails(userData);
+            setUserID(userData._id);
+            UpdateMainBuffer({ studentData });
+            window.location.reload();
+          }
+        );
+      });
+    });
+  };
+  return redirect.length > 0 ? (
+    <Redirect to={redirect} />
+  ) : (
     <div className="authContainer">
+      <img width="100" height="100" src={Logo} />
+
       <CardHeader className="bg-background">Sign Up</CardHeader>
       <CardBody>
         <Col align="center">
-          <Avatar size={200} src={
-            file? URL.createObjectURL(file) : ""
-          } />
+          <Avatar size={200} src={file ? URL.createObjectURL(file) : ""} />
         </Col>
         {image.length > 0 ? (
           <image src={image} />
@@ -68,15 +75,27 @@ const SignUp = ({ AuthenticateUser, SetUserDetails, setUserID }) => {
         )}
         <FormGroup>
           <Label>First Name</Label>
-          <Input placeholder="First Name" onChange={({ currentTarget: { value } }) => setUserInfo({
-            ...userInfo, firstName: value
-          })} />
+          <Input
+            placeholder="First Name"
+            onChange={({ currentTarget: { value } }) =>
+              setUserInfo({
+                ...userInfo,
+                firstName: value,
+              })
+            }
+          />
         </FormGroup>
         <FormGroup>
           <Label>Last Name</Label>
-          <Input placeholder="Last Name" onChange={({ currentTarget: { value } }) => setUserInfo({
-            ...userInfo, lastName: value
-          })} />
+          <Input
+            placeholder="Last Name"
+            onChange={({ currentTarget: { value } }) =>
+              setUserInfo({
+                ...userInfo,
+                lastName: value,
+              })
+            }
+          />
         </FormGroup>
         <FormGroup>
           <Label>Email</Label>

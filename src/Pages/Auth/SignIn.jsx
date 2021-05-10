@@ -13,34 +13,40 @@ import {
 import { callAPI } from "services/directCall";
 import { AuthenticateUser, SetUserDetails, setUserID } from "store/States/User";
 import { LoginBody } from "store/States/User/action";
+import Logo from "../../Assets/logo_transparent.png";
 
 const SignIn = ({ AuthenticateUser, SetUserDetails, setUserID }) => {
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
-  })
-  const [redirect, setRedirect] = useState("")
-  const [errorText, setErrorText] = useState("")
+  });
+  const [redirect, setRedirect] = useState("");
+  const [errorText, setErrorText] = useState("");
   const loginUser = () => {
-    callAPI(LoginBody({
-      ...userInfo,
-    }), "login", (userData) => {
-      if (userData.error) {
-        setErrorText("Incorrect email or password")
-      } else {
-        AuthenticateUser()
-        SetUserDetails(userData)
-        setUserID(userData._id)
-        // setRedirect("/")
-        window.location.reload()
+    callAPI(
+      LoginBody({
+        ...userInfo,
+      }),
+      "login",
+      (userData) => {
+        if (userData.error) {
+          setErrorText("Incorrect email or password");
+        } else {
+          AuthenticateUser();
+          SetUserDetails(userData);
+          setUserID(userData._id);
+          // setRedirect("/")
+          window.location.reload();
+        }
       }
-    })
-  }
+    );
+  };
 
   return redirect.length > 0 ? (
     <Redirect to={redirect} />
   ) : (
     <div className="authContainer">
+      <img width="100" height="100" src={Logo} />
       <CardHeader className="bg-background">Sign In</CardHeader>
       <CardBody>
         <FormGroup>

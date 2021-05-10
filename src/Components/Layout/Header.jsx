@@ -28,9 +28,14 @@ import bn from "../../utils/bemnames";
 import Avatar from "../Avatar";
 import UserCard from "../Card/UserCard";
 import { RenderButton } from "../MainRender";
-import { getAuthentication, DeAuthenticateUser, selectUserContent } from "store/States/User"
-import { connect } from "react-redux"
-import { Redirect } from "react-router-dom"
+import {
+  getAuthentication,
+  DeAuthenticateUser,
+  selectUserContent,
+} from "store/States/User";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Logo from "../../Assets/logo_transparent.png";
 
 const bem = bn.create("header");
 
@@ -42,7 +47,7 @@ class Header extends React.Component {
       isMobilePopoverOpen: false,
       isAboutPopoverOpen: false,
       isOpenUserCardPopover: false,
-      redirect: ""
+      redirect: "",
     };
     this.updatePredicate = this.updatePredicate.bind(this);
   }
@@ -80,23 +85,25 @@ class Header extends React.Component {
     }
 
     const setRedirect = (redirect) => {
-      this.setState({ redirect })
-    }
-    console.log("image", this.props.userContent.userData.image)
+      this.setState({ redirect });
+    };
+    console.log("image", this.props.userContent.userData.image);
 
-    return this.state.redirect.length > 0? <Redirect to={this.state.redirect} /> : (
+    return this.state.redirect.length > 0 ? (
+      <Redirect to={this.state.redirect} />
+    ) : (
       <>
         <Navbar light fixed="top" expand className={drawerClasses}>
           <Link
             to={{ pathname: routes.homePage }}
             style={{ textDecoration: "none" }}
           >
-            <Nav navbar>LOGO </Nav>
+            <img width="40" height="40" src={Logo} />
           </Link>
 
           {isMobile && (
             <Nav navbar className="ml-2">
-              Project Title
+              E-Learning
             </Nav>
           )}
           {isMobile ? (
@@ -124,7 +131,7 @@ class Header extends React.Component {
                         action
                         className="border-light"
                       >
-                        <MdHelp className="mr-3" /> How Project Title Works
+                        <MdHelp className="mr-3" /> How E-Learning Works
                       </ListGroupItem>
 
                       <ListGroupItem
@@ -159,8 +166,8 @@ class Header extends React.Component {
                     color="dark"
                     id="AboutPopover"
                     onClick={() => {
-                      this.props.DeAuthenticateUser()
-                      setRedirect("/login")
+                      this.props.DeAuthenticateUser();
+                      setRedirect("/login");
                     }}
                   />
                 </NavLink>
@@ -193,12 +200,7 @@ class Header extends React.Component {
                   </NavItem>
                   )
               } */}
-              {
-                this.props.isAuthenticated ? (
-                  <></>
-                ) :
-                  <></>
-              }
+              {this.props.isAuthenticated ? <></> : <></>}
               <NavItem>
                 <NavLink id="Popover2">
                   <Avatar
@@ -217,7 +219,11 @@ class Header extends React.Component {
                 >
                   <PopoverBody className="p-0 border-0">
                     <UserCard
-                      title={this.props.userContent.userData.firstName + " " + this.props.userContent.userData.firstName}
+                      title={
+                        this.props.userContent.userData.firstName +
+                        " " +
+                        this.props.userContent.userData.firstName
+                      }
                       subtitle={this.props.userContent.userData.email}
                       className="border-light"
                       avatar={this.props.userContent.userData.image}
@@ -300,13 +306,13 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAuthenticated: getAuthentication(state),
-  userContent: selectUserContent(state)
-})
+  userContent: selectUserContent(state),
+});
 
-const mapDispatchToProps = dispatch => ({
-  DeAuthenticateUser: () => dispatch(DeAuthenticateUser())
-})
+const mapDispatchToProps = (dispatch) => ({
+  DeAuthenticateUser: () => dispatch(DeAuthenticateUser()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -18,6 +18,7 @@ import CustomTable from "common/table"
 import { getContentsFromChapter } from "helpers/customResolvers"
 
 const ViewContents = ({ data, options }) => {
+  console.log("contents", options.contents)
   const columns = [
     { path: "title", label: "Title" },
     { path: "contentType", label: "Content Type" },

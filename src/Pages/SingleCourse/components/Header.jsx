@@ -8,13 +8,16 @@ import { selectUniversities } from "../../../store/States/Universities"
 import { selectTeachers } from "../../../store/States/Teachers"
 import { selectCourses } from "store/States/Courses"
 import { connect } from "react-redux"
-import { resolveUniversity, resolveTeacher, checkIfCourseIsPendingApproval, isCourseAvailable } from "../../../helpers/customResolvers"
+import { resolveUniversity, resolveTeacher, checkIfCourseIsPendingApproval, isCourseAvailable, checkIfCourseIsEnrolled } from "../../../helpers/customResolvers"
 import { PostEnrollmentRequest, Add, selectAddStatus, selectEnrollmentRequests } from "../../../store/States/EnrollmentRequests"
 import { Spinner } from "reactstrap"
+import { Fetch as fetchEnrolledCourses, FetchEnrolledCourses, selectEnrolledCourses } from "store/States/EnrolledCourses"
+import { selectUserContent } from "store/States/User"
 
 const CourseHeader = ({
   buffer, universities, teachers, postEnrollmentRequest,
-  addStatus, enrollmentRequests, courses
+  addStatus, enrollmentRequests, courses, userContent,
+  fetchEnrolledCourses, enrolledCourses
 }) => {
   const [addLock, setAddLock] = useState(true)
   const [redirect, setRedirect] = useState("")
@@ -24,30 +27,37 @@ const CourseHeader = ({
     }
   }, [addStatus])
 
+  useEffect(() => {
+    fetchEnrolledCourses()
+  }, [fetchEnrolledCourses])
+
+
   return redirect.length > 0 ? <Redirect to={redirect} /> :
     buffer.selectedCourse && isCourseAvailable(buffer.selectedCourse._id, courses) && (
       <div className="singleCourseHeaderContainer">
         <h5>{resolveUniversity(buffer.selectedCourse.universityID, universities)}</h5>
         <div className="label">
           <h1>{buffer.selectedCourse.title}</h1>
-          <Button
-            onClick={() => {
-              setAddLock(false)
-              postEnrollmentRequest(buffer.selectedCourse._id, "6095d13e5a4a30193a5d9472")
-            }}
-            disabled={checkIfCourseIsPendingApproval("6095d13e5a4a30193a5d9472", buffer.selectedCourse._id, enrollmentRequests)}
-          >
-            {
-            checkIfCourseIsPendingApproval("6095d13e5a4a30193a5d9472", buffer.selectedCourse._id, enrollmentRequests)?
-            <>Awaiting Acceptance</>
-            :(addLock ?
-              <>
-                <MdApps className="mr-2" />
-                Enroll Now
-              </> :
-              <Spinner />)
-              }
-          </Button>
+          {
+            !checkIfCourseIsEnrolled(buffer.selectedCourse._id, enrolledCourses) && <Button
+              onClick={() => {
+                setAddLock(false)
+                postEnrollmentRequest(buffer.selectedCourse._id, userContent.userData.externalID)
+              }}
+              disabled={checkIfCourseIsPendingApproval(userContent.userData.externalID, buffer.selectedCourse._id, enrollmentRequests)}
+            >
+              {
+              checkIfCourseIsPendingApproval(userContent.userData.externalID, buffer.selectedCourse._id, enrollmentRequests)?
+              <>Awaiting Acceptance</>
+              :(addLock ?
+                <>
+                  <MdApps className="mr-2" />
+                  Enroll Now
+                </> :
+                <Spinner />)
+                }
+            </Button>
+          }
         </div>
 
         <h6>
@@ -64,11 +74,14 @@ const mapStateToProps = state => ({
   teachers: selectTeachers(state),
   addStatus: selectAddStatus(state),
   enrollmentRequests: selectEnrollmentRequests(state),
-  courses: selectCourses(state)
+  courses: selectCourses(state),
+  userContent: selectUserContent(state),
+  enrolledCourses: selectEnrolledCourses(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-  postEnrollmentRequest: (courseID, studentID) => dispatch(Add(PostEnrollmentRequest({ courseID, studentID })))
+  postEnrollmentRequest: (courseID, studentID) => dispatch(Add(PostEnrollmentRequest({ courseID, studentID }))),
+  fetchEnrolledCourses: (id) => dispatch(fetchEnrolledCourses(FetchEnrolledCourses(id)))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseHeader);

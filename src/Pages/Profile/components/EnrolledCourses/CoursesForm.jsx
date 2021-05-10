@@ -14,9 +14,7 @@ import {
   TabPane,
 } from "reactstrap";
 import ParentForm from "../../../../common/form";
-import { UploadImage } from "store/States/Courses/actions"
 import Chapters from "./chapters/chapters";
-import FormData from "form-data"
 
 class FoodsForm extends ParentForm {
   constructor(props) {
@@ -25,7 +23,6 @@ class FoodsForm extends ParentForm {
       activeTab: "1",
       data: {
         title: "",
-        image: "",
         briefIntroduction: "",
         language: "",
         numberOfChapters: "",
@@ -33,13 +30,11 @@ class FoodsForm extends ParentForm {
         universityID: "",
         categoryID: "",
       },
-      file: {},
       errors: {},
     };
     this.state = this.initialState;
     this.schema = {
       id: Joi.string().allow("").optional(),
-      image: Joi.string().allow("").optional(),
       title: Joi.string().min(2).max(50).required(),
       briefIntroduction: Joi.string().min(2).max(50).required(),
       language: Joi.string().min(2).max(50).required(),
@@ -63,7 +58,6 @@ class FoodsForm extends ParentForm {
       data: {
         id: data._id ? data._id : "",
         title: data.title,
-        image: data.image,
         briefIntroduction: data.briefIntroduction,
         language: data.language,
         numberOfChapters: data.numberOfChapters,
@@ -85,16 +79,10 @@ class FoodsForm extends ParentForm {
     this.componentDidUpdate();
   }
 
-  async doSubmit () {
+  doSubmit() {
     const { data } = this.state;
-    const formData = new FormData()
-    formData.append("image", this.state.file)
-    await UploadImage(this.state.file, (imageAddress) => {
-      this.props.submit({
-        ...data,
-        image: imageAddress,
-      })
-    })
+
+    this.props.submit(data);
   }
 
   handleImageDrop = (image) => {
@@ -104,20 +92,11 @@ class FoodsForm extends ParentForm {
 
   render() {
     const { activeTab } = this.state;
-    console.log(this.state.file)
     return (
       <Card className="border-0 bg-background">
         <CardBody className="bg-background ">
           <Form onSubmit={this.handleSubmit}>
             <Row>
-              {this.state.data.image.length > 0?
-              <image src={this.state.data.image} /> :
-              <input type="file" onChange={async (event) => {
-                // this.setState({ file })
-                const { name, files } = event.target;
-                this.setState({ file: files[0] })
-              }} />
-              }
               <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
                   name: "title",

@@ -13,6 +13,7 @@ import { resolveTeacher, getCourseChapters, checkIfCourseIsPendingApproval, isCo
 import { PostEnrollmentRequest, Add, selectAddStatus, selectEnrollmentRequests } from "../../../store/States/EnrollmentRequests"
 import { selectChapters } from "../../../store/States/Chapters/"
 import { selectCourses } from "store/States/Courses"
+import { selectUserContent } from "store/States/User"
 
 const chapters = [
   { type: "video" },
@@ -24,7 +25,7 @@ const chapters = [
 
 const Body = ({
   buffer, teachers, chapters, enrollmentRequests, postEnrollmentRequest, addStatus, UpdateMainBuffer,
-  courses
+  courses, userContent
 }) => {
   const [addLock, setAddLock] = useState(true)
   const [redirect, setRedirect] = useState("")
@@ -75,12 +76,12 @@ const Body = ({
           <h5>{resolveTeacher(buffer.selectedCourse.teacherID, teachers)}</h5>
           <h7>{resolveTeacher(buffer.selectedCourse.teacherID, teachers, true).qualification}</h7>
           <hr />
-          {!checkIfCourseIsPendingApproval("6095d13e5a4a30193a5d9472", buffer.selectedCourse._id, enrollmentRequests)
+          {!checkIfCourseIsPendingApproval(userContent.userData.externalID, buffer.selectedCourse._id, enrollmentRequests)
           && isCourseAvailable(buffer.selectedCourse._id, courses) && 
             <Button
               onClick={() => {
                 setAddLock(false)
-                postEnrollmentRequest(buffer.selectedCourse._id, "6095d13e5a4a30193a5d9472")
+                postEnrollmentRequest(buffer.selectedCourse._id, userContent.userData.externalID)
               }}
             >
               Enroll Now
@@ -97,7 +98,8 @@ const mapStateToProps = state => ({
   chapters: selectChapters(state),
   enrollmentRequests: selectEnrollmentRequests(state),
   addStatus: selectAddStatus(state),
-  courses: selectCourses(state)
+  courses: selectCourses(state),
+  userContent: selectUserContent(state)
 })
 
 const mapDispatchToProps = dispatch => ({

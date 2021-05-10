@@ -9,17 +9,42 @@ import { connect } from "react-redux"
 import { resolveUniversity, resolveTeacher } from "../../helpers/customResolvers"
 import { UpdateMainBuffer } from "../../store/States/Buffer"
 
-const CoursesCardTwo = ({ course, universities, teachers, UpdateMainBuffer }) => {
-  return (
+const CoursesCardTwo = ({ course, universities, teachers, UpdateMainBuffer, disabled, onClick }) => {
+  return disabled ? (
+    <Card className="courseTwoCard">
+      <CardImg src={course.image} />
+      <CardImgOverlay className="imageOverlay">
+        <div className="title">{course.title ? course.title : ""}</div>
+        <div className="courseBy">{
+          course.universityID ?
+            resolveUniversity(course.universityID, universities)
+            : ""
+        }</div>
+        <div className="teacher">{
+          course.teacherID ?
+            resolveTeacher(course.teacherID, teachers)
+            : ""
+        }</div>
+      </CardImgOverlay>
+    </Card>
+  ) : (
     <Link to={{ pathname: routes.singleCourse }} onClick={() => {
       UpdateMainBuffer({ selectedCourse: course })
     }}>
       <Card className="courseTwoCard">
-        <CardImg src={Image} />
+        <CardImg src={course.image} />
         <CardImgOverlay className="imageOverlay">
-          <div className="title">{course.title}</div>
-          <div className="courseBy">{resolveUniversity(course.universityID, universities)}</div>
-          <div className="teacher">{resolveTeacher(course.teacherID, teachers)}</div>
+          <div className="title">{course.title ? course.title : ""}</div>
+          <div className="courseBy">{
+            course.universityID ?
+              resolveUniversity(course.universityID, universities)
+              : ""
+          }</div>
+          <div className="teacher">{
+            course.teacherID ?
+              resolveTeacher(course.teacherID, teachers)
+              : ""
+          }</div>
         </CardImgOverlay>
       </Card>
     </Link>

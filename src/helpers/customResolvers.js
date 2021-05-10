@@ -1,3 +1,5 @@
+import { FilterByDate } from "./Filter"
+
 export const resolveUniversity = (_id, universities) => {
   const foundUniversity = universities.find(university => university._id === _id)
   return foundUniversity? foundUniversity.name : ""
@@ -32,6 +34,31 @@ export const getRequestedCourses = (studentID, enrollmentRequests = [], courses 
     }
   })
   return studentCourses
+}
+
+export const getAllRequestedCourses = (enrollmentRequests = [], courses = []) => {
+  const studentCourses = []
+  enrollmentRequests.map(request => {
+    const foundCourse = courses.find(course => String(request.courseID) === String(course._id))
+    if (foundCourse) {
+      studentCourses.push({
+        ...foundCourse,
+        ...request,
+        requestID: request._id,
+      })
+    }
+  })
+  return studentCourses
+}
+
+export const checkIfCourseIsEnrolled = (courseID, enrolledCourses = []) => {
+  const filteredCourse = []
+  enrolledCourses.forEach(course => {
+    if (String(course._id) === String(courseID)) {
+      filteredCourse.push(course)
+    }
+  })
+  return filteredCourse.length > 0
 }
 
 export const getEnrolledCourses = (studentID, enrollments = [], courses = []) => {

@@ -27,6 +27,7 @@ export const FetchUnVerifiedCourses = () => ({
     fetchUnverifiedCourses {
       _id
       title
+      image
       briefIntroduction
       language
       numberOfChapters

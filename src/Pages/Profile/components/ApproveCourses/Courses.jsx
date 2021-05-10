@@ -6,8 +6,11 @@ import { Card, Col, Row } from "reactstrap";
 import { selectEnrollmentRequests } from "../../../../store/States/EnrollmentRequests"
 import { selectCourses } from "../../../../store/States/Courses"
 import { connect } from "react-redux"
-import { getRequestedCourses } from "../../../../helpers/customResolvers"
+import { getAllRequestedCourses } from "../../../../helpers/customResolvers"
 import { selectUserContent } from "store/States/User"
+import { PostEnrollment } from "store/States/Enrollments";
+import { RemoveEnrollementRequest } from "store/States/EnrollmentRequests"
+import { callAPI } from "services/directCall"
 
 const Courses = ({ doneAdd, doneEdit, courses, enrollmentRequests, userContent }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -17,6 +20,21 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollmentRequests, userContent }
       _toggle({ type: "CLOSE" }, dispatch);
     }
   }, [doneAdd, doneEdit]);
+  console.log("PPP", userContent.userData.externalID)
+
+  const _enrollStudent = (data) => {
+    console.log("iuiuiu", data)
+    callAPI(RemoveEnrollementRequest(data.requestID), "removeEnrollmentRequest", (ER) => {
+      console.log("iiiii", ER)
+      if (ER._id) {
+        callAPI(PostEnrollment(ER), "postEnrollment", (data) => {
+          if (data._id) {
+            window.location.reload()
+          }  
+        })
+      }
+    })
+  }
 
   return (
     <Card className="mt-2 p-2 bg-none">
@@ -32,9 +50,9 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollmentRequests, userContent }
       <h5>Courses</h5>
       <hr />
       <Row>
-        {getRequestedCourses(userContent.userData.externalID, enrollmentRequests, courses).map((course, index) => (
-          <Col md={3} sm={12}>
-            <CoursesCardTwo index={index} course={course} />
+        {getAllRequestedCourses(enrollmentRequests, courses).map((course, index) => (
+          <Col md={3} sm={12} onClick={() => _enrollStudent(course)}>
+            <CoursesCardTwo index={index} course={course} disabled={true} />
           </Col>
         ))}
       </Row>

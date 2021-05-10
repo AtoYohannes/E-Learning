@@ -28,6 +28,9 @@ import bn from "../../utils/bemnames";
 import Avatar from "../Avatar";
 import UserCard from "../Card/UserCard";
 import { RenderButton } from "../MainRender";
+import { getAuthentication, DeAuthenticateUser } from "store/States/User"
+import { connect } from "react-redux"
+import { Redirect } from "react-router-dom"
 
 const bem = bn.create("header");
 
@@ -39,6 +42,7 @@ class Header extends React.Component {
       isMobilePopoverOpen: false,
       isAboutPopoverOpen: false,
       isOpenUserCardPopover: false,
+      redirect: ""
     };
     this.updatePredicate = this.updatePredicate.bind(this);
   }
@@ -75,7 +79,11 @@ class Header extends React.Component {
       drawerClasses = " scrolledAppBar";
     }
 
-    return (
+    const setRedirect = (redirect) => {
+      this.setState({ redirect })
+    }
+
+    return this.state.redirect.length > 0? <Redirect to={this.state.redirect} /> : (
       <>
         <Navbar light fixed="top" expand className={drawerClasses}>
           <Link
@@ -145,29 +153,51 @@ class Header extends React.Component {
                 </Popover>
                 <NavLink onClick={this.toggleAboutPopover}>
                   <RenderButton
-                    title="About"
+                    title={"Logout"}
                     outline
                     color="dark"
                     id="AboutPopover"
+                    onClick={() => {
+                      this.props.DeAuthenticateUser()
+                      setRedirect("/login")
+                    }}
                   />
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink>
-                  <RenderButton
-                    title="SignUp"
-                    onClick={() => this.props.toggle("signUp")}
-                  />
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink>
-                  <RenderButton
-                    onClick={() => this.props.toggle("signIn")}
-                    title="SignIn"
-                  />
-                </NavLink>
-              </NavItem>
+              {/* {
+                !this.props.isAuthenticated ? (
+                  <></>
+                ) :
+                  (
+                    <NavItem>
+                    <Link to="/register">
+                      <NavLink>
+                        <RenderButton
+                          title="Log Out"
+                          // onClick={() => this.props.toggle("signUp")}
+                        />
+                      </NavLink>
+                    </Link>
+                  </NavItem>
+                  )
+              } */}
+              {
+                this.props.isAuthenticated ? (
+                  <></>
+                ) :
+                  (
+                    <NavItem>
+                    <Link to="/login-register">
+                      <NavLink>
+                        <RenderButton
+                          title="Getting Started"
+                          // onClick={() => this.props.toggle("signUp")}
+                        />
+                      </NavLink>
+                    </Link>
+                  </NavItem>
+                  )
+              }
               <NavItem>
                 <NavLink id="Popover2">
                   <Avatar
@@ -267,4 +297,12 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  isAuthenticated: getAuthentication(state)
+})
+
+const mapDispatchToProps = dispatch => ({
+  DeAuthenticateUser: () => dispatch(DeAuthenticateUser())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

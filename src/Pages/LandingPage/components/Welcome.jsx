@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { selectUserContent } from "store/States/User"
+import { connect } from "react-redux"
 
-const Welcome = () => {
+const Welcome = ({ userContent }) => {
+  const [userInfo, setUserInfo] = useState({
+    firstName: "", lastName: ""
+  })
+  useEffect(() => {
+    setUserInfo(userContent.userData)
+  }, [userContent])
+
   return (
     <div className="welcomeContainer">
-      <h1>Welcome, Yohannes Berhanu</h1>
+      <h1>Welcome, {userInfo.firstName + " " + userInfo.lastName}</h1>
     </div>
   );
 };
-export default Welcome;
+
+const mapStateToProps = state => ({
+  userContent: selectUserContent(state)
+})
+
+export default connect(mapStateToProps)(Welcome)

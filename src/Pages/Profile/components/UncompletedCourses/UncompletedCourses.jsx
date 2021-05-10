@@ -49,7 +49,10 @@ export default ({
       {
         type: "EDIT",
         Component: AddContentForm,
-        submit: postContent,
+        submit: (data) => {
+          // console.log('one', data)
+          postContent(data)
+        },
         title: "New Content",
         size: "md",
         data: {
@@ -103,6 +106,7 @@ export default ({
                 setCurrentCourse(course)
               }}
               addContent={(data) => {
+                console.log("oio", data)
                 setCurrentContent(data)
               }}
               viewContent={(data) => {

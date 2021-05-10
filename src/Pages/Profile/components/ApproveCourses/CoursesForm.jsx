@@ -14,9 +14,7 @@ import {
   TabPane,
 } from "reactstrap";
 import ParentForm from "../../../../common/form";
-import { UploadImage } from "store/States/Courses/actions"
 import Chapters from "./chapters/chapters";
-import FormData from "form-data"
 
 class FoodsForm extends ParentForm {
   constructor(props) {
@@ -24,29 +22,18 @@ class FoodsForm extends ParentForm {
     this.initialState = {
       activeTab: "1",
       data: {
-        title: "",
+        name: "",
         image: "",
-        briefIntroduction: "",
-        language: "",
-        numberOfChapters: "",
-        teacherID: "",
-        universityID: "",
-        categoryID: "",
+        subtitle: "",
       },
-      file: {},
       errors: {},
     };
     this.state = this.initialState;
     this.schema = {
-      id: Joi.string().allow("").optional(),
-      image: Joi.string().allow("").optional(),
-      title: Joi.string().min(2).max(50).required(),
-      briefIntroduction: Joi.string().min(2).max(50).required(),
-      language: Joi.string().min(2).max(50).required(),
-      numberOfChapters: Joi.string().min(2).max(50).required(),
-      teacherID: Joi.string().min(2).max(50).required(),
-      universityID: Joi.string().min(2).max(50).required(),
-      categoryID: Joi.string().min(2).max(50).required(),
+      _id: Joi.string().allow("").optional(),
+      name: Joi.string().min(2).max(50).required(),
+      subtitle: Joi.string().allow("").optional(),
+      image: Joi.any().allow("").optional(),
     };
   }
   toggle = (tab) => {
@@ -61,15 +48,10 @@ class FoodsForm extends ParentForm {
     const updatedState = {
       ...this.state,
       data: {
-        id: data._id ? data._id : "",
-        title: data.title,
+        _id: data._id ? data._id : "",
+        name: data.name,
         image: data.image,
-        briefIntroduction: data.briefIntroduction,
-        language: data.language,
-        numberOfChapters: data.numberOfChapters,
-        teacherID: data.teacherID,
-        universityID: data.universityID,
-        categoryID: data.categoryID,
+        subtitle: data.subtitle,
       },
       lockUpdate: true,
     };
@@ -85,16 +67,10 @@ class FoodsForm extends ParentForm {
     this.componentDidUpdate();
   }
 
-  async doSubmit () {
+  doSubmit() {
     const { data } = this.state;
-    const formData = new FormData()
-    formData.append("image", this.state.file)
-    await UploadImage(this.state.file, (imageAddress) => {
-      this.props.submit({
-        ...data,
-        image: imageAddress,
-      })
-    })
+
+    this.props.submit(data);
   }
 
   handleImageDrop = (image) => {
@@ -104,23 +80,14 @@ class FoodsForm extends ParentForm {
 
   render() {
     const { activeTab } = this.state;
-    console.log(this.state.file)
     return (
       <Card className="border-0 bg-background">
         <CardBody className="bg-background ">
           <Form onSubmit={this.handleSubmit}>
             <Row>
-              {this.state.data.image.length > 0?
-              <image src={this.state.data.image} /> :
-              <input type="file" onChange={async (event) => {
-                // this.setState({ file })
-                const { name, files } = event.target;
-                this.setState({ file: files[0] })
-              }} />
-              }
               <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
-                  name: "title",
+                  name: "course_title",
                   label: "Course Title",
                 })}
               </Col>
@@ -133,44 +100,97 @@ class FoodsForm extends ParentForm {
               </Col>
               <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
-                  name: "numberOfChapters",
+                  name: "number_of_chapters",
                   label: "Number of Chapters",
                   type: "number",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
-                {this.renderSelect({
-                  name: "teacherID",
+                {this.renderInput({
+                  name: "teacher",
                   label: "Assigned Teacher",
-                  options: this.props.options.teachers.map(item => ({
-                    ...item,
-                    name: item.firstName + " " + item.lastName
-                  })),
-                  optionsFrom: "server"
+                  type: "number",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
-                {this.renderSelect({
-                  name: "universityID",
+                {this.renderInput({
+                  name: "university",
                   label: "University Name",
-                  options: this.props.options.universities,
-                  optionsFrom: "server"
+                  type: "number",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
                 {this.renderSelect({
-                  name: "categoryID",
+                  name: "category",
                   label: "Category",
-                  options: this.props.options.categories,
-                  optionsFrom: "server"
+                  options: ["Category One", "Category Two"],
                 })}
               </Col>
               <Col md={12} sm={12} xs={12}>
                 {this.renderInput({
-                  name: "briefIntroduction",
+                  name: "brief",
                   label: "Course Description",
                   type: "textarea",
                 })}
+              </Col>
+              <Col md={12} xs={12} sm={12}>
+                <div className="formStepper">
+                  <Nav tabs>
+                    <NavItem>
+                      <NavLink
+                        className={
+                          activeTab === "1"
+                            ? "activepageTab"
+                            : "notactivepageTab"
+                        }
+                        onClick={() => {
+                          this.toggle("1");
+                        }}
+                      >
+                        Chapter One
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={
+                          activeTab === "2"
+                            ? "activepageTab"
+                            : "notactivepageTab"
+                        }
+                        onClick={() => {
+                          this.toggle("2");
+                        }}
+                      >
+                        Chapter Two
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={
+                          activeTab === "3"
+                            ? "activepageTab"
+                            : "notactivepageTab"
+                        }
+                        onClick={() => {
+                          this.toggle("3");
+                        }}
+                      >
+                        Chapter Three
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                  <TabContent activeTab={activeTab}>
+                    <TabPane tabId="1">
+                      <Chapters />
+                    </TabPane>
+                    <TabPane tabId="2">
+                      <Chapters />
+                    </TabPane>
+                    <TabPane tabId="3">
+                      <Chapters />
+                    </TabPane>
+                  </TabContent>
+                </div>
               </Col>
             </Row>
 

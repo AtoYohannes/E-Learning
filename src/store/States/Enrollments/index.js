@@ -1,4 +1,6 @@
 import StateArrayModel from "../../../wrappers/StateModels/StateArrayModelGQL"
+import { store } from "../../../index"
+import { selectUserContent } from "../User/"
 
 const Enrollments = new StateArrayModel({ stateName: "enrollments_new" })
 
@@ -34,9 +36,10 @@ export const FetchEnrollments = () => ({
   }`,
 })
 
-export const PostEnrollment = ({ courseID, studentID }) => ({
-  query: `mutation($studentID: String!, $courseID: String!) {
-    postEnrollment(EnrollmentRequestInput: {
+export const PostEnrollment = ({ courseID, studentID }) => {
+  return {
+    query: `mutation($studentID: String!, $courseID: String!) {
+      postEnrollment(EnrollmentInput: {
       studentID: $studentID,
       courseID: $courseID
     }) {
@@ -47,9 +50,10 @@ export const PostEnrollment = ({ courseID, studentID }) => ({
       updatedAt
     }
   }`,
-  variables: {
-    courseID, studentID
+    variables: {
+      courseID, studentID
+    }
   }
-})
+}
 
 export { selectData as selectEnrollments }

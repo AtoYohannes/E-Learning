@@ -30,7 +30,8 @@ const CoursesCard = ({
             className="buttons"
             size="sm"
             color="blue"
-            onClick={(chapter) => {
+            onClick={() => {
+              // console.log("pop", chapter)
               addContent(chapter)
             }}
           >
@@ -71,29 +72,37 @@ const CoursesCard = ({
     }
   ]
 
-  console.log("here", isCourseAvailable(course._id, courses))
+  // console.log("here", isCourseAvailable(course._id, courses))
 
   return (
     <Card className="coursesCardContainer">
       <CardBody className="coursesCard">
         <div>
-          <header>{course.title}</header>
+          <header>{course.title? course.title : ""}</header>
           <tag style={{ fontSize: 12 }} onClick={() => addChapter()}>New Chapter</tag>
-          {checkCourseVerification(course, chapters, contents)?
+          {course && checkCourseVerification(course, chapters, contents)?
           isCourseAvailable(course._id, courses)?
           <tag style={{ fontSize: 12 }}>Verified</tag> :
           <tag style={{ fontSize: 12 }} onClick={() => verifyCourse(course._id)}>Verify Course</tag>
            : <></>
           }
-          <CustomTable title="Chapters" columns={columns} data={getCourseChapters(course._id, chapters)} />
+          <CustomTable title="Chapters" columns={columns} data={
+            course._id? getCourseChapters(course._id, chapters) : []
+          } />
         </div>
         {/* <Button style={{ width: 50, height: 30 }}>{
           title ? title : "Go to Course"
         }</Button> */}
       </CardBody>
       <CardFooter className="courseFooter">
-        <h6>{resolveUniversity(course.universityID, universities)}</h6>
-        <small>{resolveTeacher(course.teacherID, teachers)}</small>
+        <h6>{
+          course.universityID?
+          resolveUniversity(course.universityID, universities) : ""
+        }</h6>
+        <small>{
+          course.teacherID?
+          resolveTeacher(course.teacherID, teachers) : ""
+        }</small>
       </CardFooter>
     </Card>
   );

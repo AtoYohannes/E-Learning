@@ -1,30 +1,30 @@
 import StateArrayModel from "../../../wrappers/StateModels/StateArrayModelGQL"
 
-const Courses = new StateArrayModel({ stateName: "courses_new" })
+const EnrolledCourses = new StateArrayModel({ stateName: "enrolledCourses_new" })
 
-Courses.setInitialState()
+EnrolledCourses.setInitialState()
 
-Courses.setFetchBody("fetchCourses")
-Courses.setAddBody("postCourse")
+EnrolledCourses.setFetchBody("fetchUserEnrolledCourses")
+EnrolledCourses.setAddBody("postCourse")
 // Categories.setDeleteBody("removeNotice")
 
-Courses.createSlice()
+EnrolledCourses.createSlice()
 
 export const {
   selectAddStatus, selectFetchStatus, selectEditStatus, selectDeleteStatus, selectData
-} = Courses.getSelectors()
+} = EnrolledCourses.getSelectors()
 
 export const {
   stateName, reducer
-} = Courses.getEntity()
+} = EnrolledCourses.getEntity()
 
 export const {
   Fetch, Add, Remove
-} = Courses.getAPIHandles()
+} = EnrolledCourses.getAPIHandles()
 
-export const FetchCourses = () => ({
-  query: `query {
-    fetchCourses {
+export const FetchEnrolledCourses = (id) => ({
+  query: `query ($id: String!) {
+    fetchUserEnrolledCourses(_id: $id) {
       _id
       title
       image
@@ -34,8 +34,13 @@ export const FetchCourses = () => ({
       teacherID
       universityID
       categoryID
+      createdAt
+      updatedAt
     }
   }`,
+  variables: {
+    id
+  }
 })
 
 export const AddCourse = ({
@@ -73,4 +78,4 @@ export const AddCourse = ({
   }
 })
 
-export { selectData as selectCourses }
+export { selectData as selectEnrolledCourses }

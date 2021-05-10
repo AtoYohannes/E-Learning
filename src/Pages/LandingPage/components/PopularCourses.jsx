@@ -1,14 +1,15 @@
-import CoursesCard from "Components/Card/CoursesCard";
+import CoursesCardTwo from "Components/Card/CoursesCardTwo";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CardBody, CardHeader, Col, Row } from "reactstrap";
 import routes from "../../../Config/routes";
 import { selectCourses, Fetch, FetchCourses } from "../../../store/States/Courses"
+import { UpdateMainBuffer } from "store/States/Buffer"
 import { connect } from "react-redux"
 
 const popularCourses = [{}, {}, {}, {}];
 
-const PopularCourses = ({ courses, fetchCourses }) => {
+const PopularCourses = ({ courses, fetchCourses, UpdateMainBuffer }) => {
   useEffect(() => {
     fetchCourses()
   }, [fetchCourses])
@@ -22,8 +23,8 @@ const PopularCourses = ({ courses, fetchCourses }) => {
       <CardBody className="popularCoursesBody">
         <Row>
           {courses.map((course) => (
-            <Col md={6} sm={6} xs={12}>
-              <CoursesCard course={course} />
+            <Col md={3} sm={3} xs={12}>
+              <CoursesCardTwo course={course} onClick={(id) => UpdateMainBuffer({ selectedContent: id })} />
             </Col>
           ))}
         </Row>
@@ -40,7 +41,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCourses: () => dispatch(Fetch(FetchCourses()))
+  fetchCourses: () => dispatch(Fetch(FetchCourses())),
+  UpdateMainBuffer: data => dispatch(UpdateMainBuffer(data))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PopularCourses);

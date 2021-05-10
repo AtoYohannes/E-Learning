@@ -5,6 +5,9 @@ import React, { useEffect, useReducer } from "react";
 import { MdDelete, MdEdit, MdRemoveRedEye } from "react-icons/md";
 import { Button, Card, Col, Row } from "reactstrap";
 import TeachersForm from "./TeachersForm";
+import { PostTeacherAccount, PostUser } from "store/States/User/action"
+import { AddTeacher } from "store/States/Teachers/"
+import { callAPI } from "services/directCall"
 
 const Teachers = ({
   teachers,
@@ -74,6 +77,28 @@ const Teachers = ({
             </icon>
             <small>
               <b>Edit</b>
+            </small>
+          </Button>
+          <Button
+            className="buttons"
+            size="sm"
+            color="warning"
+            onClick={() => {
+              callAPI(PostTeacherAccount({
+                ...teacher,
+                externalID: teacher._id
+              }), "postUser", (userData) => {
+                if (userData._id) {
+                  window.location.reload()
+                }
+              })
+            }}
+          >
+            <icon>
+              <MdEdit />
+            </icon>
+            <small>
+              Add Account
             </small>
           </Button>
           <Button

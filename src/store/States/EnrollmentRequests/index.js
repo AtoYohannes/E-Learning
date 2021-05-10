@@ -1,4 +1,6 @@
 import StateArrayModel from "../../../wrappers/StateModels/StateArrayModelGQL"
+import { store } from "../../../index"
+import { selectUserContent } from "../User/"
 
 const EnrollmentRequests = new StateArrayModel({ stateName: "enrollmentRequests_new" })
 
@@ -34,12 +36,30 @@ export const FetchEnrollmentRequests = () => ({
   }`,
 })
 
-export const PostEnrollmentRequest = ({ courseID, studentID }) => ({
-  query: `mutation($studentID: String!, $courseID: String!) {
-    postEnrollmentRequest(EnrollmentRequestInput: {
-      studentID: $studentID,
-      courseID: $courseID
-    }) {
+export const PostEnrollmentRequest = ({ courseID }) => {
+  const studentID = selectUserContent(store.getState()).userData.externalID
+    return {
+    query: `mutation($studentID: String!, $courseID: String!) {
+      postEnrollmentRequest(EnrollmentRequestInput: {
+        studentID: $studentID,
+        courseID: $courseID
+      }) {
+        _id
+        studentID
+        courseID
+        createdAt
+        updatedAt
+      }
+    }`,
+    variables: {
+      courseID, studentID
+    }
+  }
+}
+
+export const RemoveEnrollementRequest = (id) => ({
+  query: `mutation ($id: String!) {
+    removeEnrollmentRequest(_id: $id) {
       _id
       studentID
       courseID
@@ -48,7 +68,7 @@ export const PostEnrollmentRequest = ({ courseID, studentID }) => ({
     }
   }`,
   variables: {
-    courseID, studentID
+    id
   }
 })
 

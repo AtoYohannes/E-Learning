@@ -38,36 +38,30 @@ export const FetchStudents = () => ({
 })
 
 export const AddStudent = ({
-  firstName, lastName, email, qualification, briefIntroduction
+  firstName, lastName, email
 }) => ({
-  query: `mutation(
-    $firstName: String!, $lastName: String!, $email: String!, $qualification: String!, $briefIntroduction: String!
+  query: `mutation (
+    $firstName: String!,
+    $lastName: String!,
+    $email: String!,
   ) {
     postStudent(StudentInput: {
       firstName: $firstName,
       lastName: $lastName,
       email: $email,
-      qualification: $qualification,
-      briefIntroduction: $briefIntroduction,
-      image: "some_image"
     }) {
       _id
       firstName
       lastName
       email
-      qualification
-      briefIntroduction
-      image
-      createdAt
+      numberOfCoursesEnrolled
+      numberOfCoursesCompleted
       updatedAt
-      error {
-        type
-        message
-      }
+      createdAt
     }
   }`,
   variables: {
-    firstName, lastName, email, qualification, briefIntroduction
+    firstName, lastName, email
   }
 })
 

@@ -1,20 +1,7 @@
 import Joi from "joi-browser";
 import React from "react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Col,
-  Form,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 import ParentForm from "../../../../common/form";
-import Chapters from "./chapters/chapters";
 
 class FoodsForm extends ParentForm {
   constructor(props) {
@@ -121,11 +108,11 @@ class FoodsForm extends ParentForm {
                 {this.renderSelect({
                   name: "teacherID",
                   label: "Assigned Teacher",
-                  options: this.props.options.teachers.map(item => ({
+                  options: this.props.options.teachers.map((item) => ({
                     ...item,
-                    name: item.firstName + " " + item.lastName
+                    name: item.firstName + " " + item.lastName,
                   })),
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
@@ -133,7 +120,7 @@ class FoodsForm extends ParentForm {
                   name: "universityID",
                   label: "University Name",
                   options: this.props.options.universities,
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
@@ -141,7 +128,7 @@ class FoodsForm extends ParentForm {
                   name: "categoryID",
                   label: "Category",
                   options: this.props.options.categories,
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={12} sm={12} xs={12}>

@@ -1,22 +1,9 @@
+import FormData from "form-data";
 import Joi from "joi-browser";
 import React from "react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Col,
-  Form,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
+import { UploadImage } from "store/States/Courses/actions";
 import ParentForm from "../../../../common/form";
-import { UploadImage } from "store/States/Courses/actions"
-import Chapters from "./chapters/chapters";
-import FormData from "form-data"
 
 class FoodsForm extends ParentForm {
   constructor(props) {
@@ -85,16 +72,16 @@ class FoodsForm extends ParentForm {
     this.componentDidUpdate();
   }
 
-  async doSubmit () {
+  async doSubmit() {
     const { data } = this.state;
-    const formData = new FormData()
-    formData.append("image", this.state.file)
+    const formData = new FormData();
+    formData.append("image", this.state.file);
     await UploadImage(this.state.file, (imageAddress) => {
       this.props.submit({
         ...data,
         image: imageAddress,
-      })
-    })
+      });
+    });
   }
 
   handleImageDrop = (image) => {
@@ -104,20 +91,24 @@ class FoodsForm extends ParentForm {
 
   render() {
     const { activeTab } = this.state;
-    console.log(this.state.file)
+    console.log(this.state.file);
     return (
       <Card className="border-0 bg-background">
         <CardBody className="bg-background ">
           <Form onSubmit={this.handleSubmit}>
             <Row>
-              {this.state.data.image.length > 0?
-              <image src={this.state.data.image} /> :
-              <input type="file" onChange={async (event) => {
-                // this.setState({ file })
-                const { name, files } = event.target;
-                this.setState({ file: files[0] })
-              }} />
-              }
+              {this.state.data.image.length > 0 ? (
+                <image src={this.state.data.image} />
+              ) : (
+                <input
+                  type="file"
+                  onChange={async (event) => {
+                    // this.setState({ file })
+                    const { name, files } = event.target;
+                    this.setState({ file: files[0] });
+                  }}
+                />
+              )}
               <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
                   name: "title",
@@ -142,11 +133,11 @@ class FoodsForm extends ParentForm {
                 {this.renderSelect({
                   name: "teacherID",
                   label: "Assigned Teacher",
-                  options: this.props.options.teachers.map(item => ({
+                  options: this.props.options.teachers.map((item) => ({
                     ...item,
-                    name: item.firstName + " " + item.lastName
+                    name: item.firstName + " " + item.lastName,
                   })),
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
@@ -154,7 +145,7 @@ class FoodsForm extends ParentForm {
                   name: "universityID",
                   label: "University Name",
                   options: this.props.options.universities,
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
@@ -162,7 +153,7 @@ class FoodsForm extends ParentForm {
                   name: "categoryID",
                   label: "Category",
                   options: this.props.options.categories,
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={12} sm={12} xs={12}>

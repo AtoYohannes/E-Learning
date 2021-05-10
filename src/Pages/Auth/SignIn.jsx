@@ -59,6 +59,7 @@ const SignIn = ({ AuthenticateUser, SetUserDetails, setUserID }) => {
           <Label>Password</Label>
           <Input
             placeholder="password"
+            type="password"
             onChange={({ currentTarget: { value } }) =>
               setUserInfo({
                 ...userInfo,

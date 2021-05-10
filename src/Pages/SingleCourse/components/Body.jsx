@@ -96,6 +96,7 @@ const Body = ({
           <hr />
           {!checkIfCourseIsPendingApproval(userContent.userData.externalID, buffer.selectedCourse._id, enrollmentRequests)
             && isCourseAvailable(buffer.selectedCourse._id, courses) &&
+            !checkIfCourseIsEnrolled(buffer.selectedCourse._id, enrolledCourses) &&
             <Button
               onClick={() => {
                 setAddLock(false)

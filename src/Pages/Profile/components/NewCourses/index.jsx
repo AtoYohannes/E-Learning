@@ -2,16 +2,22 @@ import { reduxStatus } from "constants/reduxStatus";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import { selectCategories } from "store/States/Categories";
 import {
-  Add, Edit, Fetch, Remove,
-  selectAddStatus, selectDeleteStatus, selectEditStatus, selectFetchStatus,
-  FetchCourses, AddCourse, selectCourses
+  Add,
+  AddCourse,
+  Fetch,
+  FetchCourses,
+  selectAddStatus,
+  selectCourses,
+  selectDeleteStatus,
+  selectEditStatus,
+  selectFetchStatus,
 } from "store/States/Courses";
-import { selectUnVerifiedCourses } from "store/States/UnCompletedCourses"
-import { selectEnrollments } from "../../../../store/States/Enrollments"
-import { selectCategories } from "store/States/Categories"
-import { selectUniversities } from "store/States/Universities"
-import { selectTeachers } from "store/States/Teachers"
+import { selectTeachers } from "store/States/Teachers";
+import { selectUnVerifiedCourses } from "store/States/UnCompletedCourses";
+import { selectUniversities } from "store/States/Universities";
+import { selectEnrollments } from "../../../../store/States/Enrollments";
 import Courses from "./Courses";
 
 const Loader = ({
@@ -29,7 +35,7 @@ const Loader = ({
   universities,
   teachers,
   enrollments,
-  unVerifiedCourses
+  unVerifiedCourses,
 }) => {
   const [data, setData] = useState([]);
   const [fetchLock, setFetchLock] = useState(true);
@@ -86,7 +92,7 @@ const Loader = ({
 
   const _addCourse = (data) => {
     setAddLock(false);
-    
+
     addCourse(data);
   };
 
@@ -132,7 +138,7 @@ const mapStateToProps = (state, ownProps) => ({
   universities: selectUniversities(state),
   teachers: selectTeachers(state),
   enrollments: selectEnrollments(state),
-  unVerifiedCourses: selectUnVerifiedCourses(state)
+  unVerifiedCourses: selectUnVerifiedCourses(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

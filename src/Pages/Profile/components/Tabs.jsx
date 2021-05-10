@@ -19,14 +19,13 @@ import Teachers from "./Teachers";
 import NewCourses from "./NewCourses"
 import EnrolledCourses from "./EnrolledCourses"
 import ApproveRequetedCourses from "./ApproveCourses"
+import EditCourses from "./EditCourses"
 import { selectUserContent } from "store/States/User"
 import { connect } from "react-redux"
 
 const Tabs = ({ userContent }) => {
-  const [activeTab, setActiveTab] = useState("2");
+  const [activeTab, setActiveTab] = useState("0");
   console.log("one", userContent.userData.userType)
-
-
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -144,6 +143,17 @@ const Tabs = ({ userContent }) => {
               Approve Courses
           </NavLink>
           </NavItem>)}
+          {userContent.userData.userType === "TEACHER" && (
+          <NavItem>
+            <NavLink
+              className={activeTab === "9" ? "activepageTab" : "notactivepageTab"}
+              onClick={() => {
+                toggle("9");
+              }}
+            >
+              Edit Courses
+          </NavLink>
+          </NavItem>)}
       </Nav>
       <TabContent className="mt-3" activeTab={activeTab}>
         <TabPane tabId="0">
@@ -172,6 +182,9 @@ const Tabs = ({ userContent }) => {
         </TabPane>
         <TabPane tabId="8">
           <ApproveRequetedCourses />
+        </TabPane>
+        <TabPane tabId="9">
+          <EditCourses />
         </TabPane>
       </TabContent>
     </div>

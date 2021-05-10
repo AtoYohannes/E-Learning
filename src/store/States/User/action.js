@@ -112,6 +112,7 @@ export const LoginBody = ({ email, password }) => ({
       completedCourses
       email
       password
+      image
       userType
       externalID
       numberOfCoursesEnrolled

@@ -9,9 +9,10 @@ import { selectMainBuffer, UpdateMainBuffer } from "../../../store/States/Buffer
 import { selectUniversities } from "../../../store/States/Universities"
 import { selectTeachers } from "../../../store/States/Teachers"
 import { connect } from "react-redux"
-import { resolveTeacher, getCourseChapters, checkIfCourseIsPendingApproval, isCourseAvailable } from "../../../helpers/customResolvers"
+import { resolveTeacher, getCourseChapters, checkIfCourseIsPendingApproval, isCourseAvailable, checkIfCourseIsEnrolled } from "../../../helpers/customResolvers"
 import { PostEnrollmentRequest, Add, selectAddStatus, selectEnrollmentRequests } from "../../../store/States/EnrollmentRequests"
 import { selectChapters } from "../../../store/States/Chapters/"
+import { selectEnrolledCourses } from "store/States/EnrolledCourses"
 import { selectCourses } from "store/States/Courses"
 import { selectUserContent } from "store/States/User"
 
@@ -25,7 +26,7 @@ const chapters = [
 
 const Body = ({
   buffer, teachers, chapters, enrollmentRequests, postEnrollmentRequest, addStatus, UpdateMainBuffer,
-  courses, userContent
+  courses, userContent, enrolledCourses
 }) => {
   const [addLock, setAddLock] = useState(true)
   const [redirect, setRedirect] = useState("")
@@ -49,23 +50,40 @@ const Body = ({
         <Row>
           {getCourseChapters(buffer.selectedCourse._id, chapters).map((chapter, index) => {
             return (
-              <Link to={routes.singleChapter} onClick={() => {
-                UpdateMainBuffer({ selectedChapter: chapter._id })
-              }}>
-                <Col key={index} md={4} sm={6} xs={12}>
-                  <Card className="chapters">
-                    <h6>{chapter.title}</h6>
-                    {/* <h6>Basics of The Course</h6> */}
-                    <div className="courseType">
-                      {chapter.numberOfVideos > 0 ? <MdVideoCall size={10} /> : null}
-                      {chapter.numberOfAssignments > 0 ? <MdReceipt size={10} /> : null}
-                      {chapter.numberOfReading > 0 ? <MdPictureAsPdf size={10} /> : null}
-                      {/* {course.numberOfReading > 0 ? <MdHelp size={20} /> : null} */}
-                      <h7>Estimated 1hr 30 Minutes</h7>
-                    </div>
-                  </Card>
-                </Col>
-              </Link>
+              <Col key={index} md={4} sm={6} xs={12}>
+                {
+                  checkIfCourseIsEnrolled(buffer.selectedCourse._id, enrolledCourses) ?
+                    (
+                      <Link to={routes.singleChapter} onClick={() => {
+                        UpdateMainBuffer({ selectedChapter: chapter._id })
+                      }}>
+                        <Card className="chapters">
+                          <h6>{chapter.title}</h6>
+                          {/* <h6>Basics of The Course</h6> */}
+                          <div className="courseType">
+                            {chapter.numberOfVideos > 0 ? <MdVideoCall size={10} /> : null}
+                            {chapter.numberOfAssignments > 0 ? <MdReceipt size={10} /> : null}
+                            {chapter.numberOfReading > 0 ? <MdPictureAsPdf size={10} /> : null}
+                            {/* {course.numberOfReading > 0 ? <MdHelp size={20} /> : null} */}
+                            <h7>Estimated 1hr 30 Minutes</h7>
+                          </div>
+                        </Card>
+                      </Link>
+                    ) : (
+                      <Card className="chapters">
+                        <h6>{chapter.title}</h6>
+                        {/* <h6>Basics of The Course</h6> */}
+                        <div className="courseType">
+                          {chapter.numberOfVideos > 0 ? <MdVideoCall size={10} /> : null}
+                          {chapter.numberOfAssignments > 0 ? <MdReceipt size={10} /> : null}
+                          {chapter.numberOfReading > 0 ? <MdPictureAsPdf size={10} /> : null}
+                          {/* {course.numberOfReading > 0 ? <MdHelp size={20} /> : null} */}
+                          <h7>Estimated 1hr 30 Minutes</h7>
+                        </div>
+                      </Card>
+                    )
+                }
+              </Col>
             );
           })}
         </Row>
@@ -77,7 +95,7 @@ const Body = ({
           <h7>{resolveTeacher(buffer.selectedCourse.teacherID, teachers, true).qualification}</h7>
           <hr />
           {!checkIfCourseIsPendingApproval(userContent.userData.externalID, buffer.selectedCourse._id, enrollmentRequests)
-          && isCourseAvailable(buffer.selectedCourse._id, courses) && 
+            && isCourseAvailable(buffer.selectedCourse._id, courses) &&
             <Button
               onClick={() => {
                 setAddLock(false)
@@ -99,7 +117,8 @@ const mapStateToProps = state => ({
   enrollmentRequests: selectEnrollmentRequests(state),
   addStatus: selectAddStatus(state),
   courses: selectCourses(state),
-  userContent: selectUserContent(state)
+  userContent: selectUserContent(state),
+  enrolledCourses: selectEnrolledCourses(state)
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -23,14 +23,20 @@ const SignIn = ({
     password: "",
   })
   const [redirect, setRedirect] = useState("")
+  const [errorText, setErrorText] = useState("")
   const loginUser = () => {
     callAPI(LoginBody({
       ...userInfo,
     }), "login", (userData) => {
-      AuthenticateUser()
-      SetUserDetails(userData)
-      setUserID(userData._id)
-      setRedirect("/")
+      if (userData.error) {
+        setErrorText("Incorrect email or password")
+      } else {
+        AuthenticateUser()
+        SetUserDetails(userData)
+        setUserID(userData._id)
+        // setRedirect("/")
+        window.location.reload()
+      }
     })
   }
 
@@ -50,6 +56,7 @@ const SignIn = ({
             ...userInfo, password: value
           })} />
         </FormGroup>
+        <p style={{ color: "red" }}>{errorText}</p>
         <Col align="center">
           <Button onClick={loginUser}>Login</Button>
         </Col>

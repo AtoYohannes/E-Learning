@@ -12,6 +12,8 @@ import { selectEnrollments } from "../../../../store/States/Enrollments"
 import { selectCategories } from "store/States/Categories"
 import { selectUniversities } from "store/States/Universities"
 import { selectTeachers } from "store/States/Teachers"
+import { selectUserContent } from "store/States/User"
+import { selectChapters } from "store/States/Chapters"
 import Courses from "./Courses";
 
 const Loader = ({
@@ -29,7 +31,9 @@ const Loader = ({
   universities,
   teachers,
   enrollments,
-  unVerifiedCourses
+  unVerifiedCourses,
+  userContent,
+  chapters
 }) => {
   const [data, setData] = useState([]);
   const [fetchLock, setFetchLock] = useState(true);
@@ -103,6 +107,7 @@ const Loader = ({
     setDeleteLock(false);
     deleteCourse(id);
   };
+  console.log("her", userContent.userData.userType)
   return (
     <Courses
       doneAdd={addStatus.status === reduxStatus.success && !addLock}
@@ -116,7 +121,9 @@ const Loader = ({
       universities={universities}
       teachers={teachers}
       enrollments={enrollments}
+      userType={userContent.userData.userType}
       unVerifiedCourses={unVerifiedCourses}
+      chapters={chapters}
     />
   );
 };
@@ -132,7 +139,9 @@ const mapStateToProps = (state, ownProps) => ({
   universities: selectUniversities(state),
   teachers: selectTeachers(state),
   enrollments: selectEnrollments(state),
-  unVerifiedCourses: selectUnVerifiedCourses(state)
+  unVerifiedCourses: selectUnVerifiedCourses(state),
+  userContent: selectUserContent(state),
+  chapters: selectChapters(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

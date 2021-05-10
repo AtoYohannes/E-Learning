@@ -31,7 +31,6 @@ const CourseHeader = ({
     fetchEnrolledCourses()
   }, [fetchEnrolledCourses])
 
-
   return redirect.length > 0 ? <Redirect to={redirect} /> :
     buffer.selectedCourse && isCourseAvailable(buffer.selectedCourse._id, courses) && (
       <div className="singleCourseHeaderContainer">

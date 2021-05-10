@@ -6,7 +6,7 @@ import { Card, Col, Row, Button } from "reactstrap";
 import { getEnrolledCourses } from "../../../../helpers/customResolvers"
 import CourseForm from "./CoursesForm"
 
-const Courses = ({ unVerifiedCourses, doneAdd, doneEdit, courses, enrollments, categories, universities, teachers, addCourse }) => {
+const Courses = ({ userType, unVerifiedCourses, doneAdd, doneEdit, courses, enrollments, categories, universities, teachers, addCourse }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Courses = ({ unVerifiedCourses, doneAdd, doneEdit, courses, enrollments, c
     }
   }, [doneAdd, doneEdit]);
 
-  console.log("her", unVerifiedCourses)
+  console.log("her", userType )
   return (
     <Card className="mt-2 p-2 bg-none">
       <CommonModals
@@ -27,28 +27,31 @@ const Courses = ({ unVerifiedCourses, doneAdd, doneEdit, courses, enrollments, c
         dispatch={dispatch}
         title={state.title}
       />
-      <Col align="right" className="newButton">
-        <Button
-          onClick={() =>
-            _toggle(
-              {
-                type: "ADD",
-                Component: CourseForm,
-                submit: addCourse,
-                title: "New Course",
-                size: "md",
-                options: {
-                  categories, universities, teachers
-                }
-              },
-              dispatch
-            )
-          }
-          size="sm"
-        >
-          Add New Course
+      {userType === "TEACHER" ? (
+        <Col align="right" className="newButton">
+          <Button
+            onClick={() =>
+              _toggle(
+                {
+                  type: "ADD",
+                  Component: CourseForm,
+                  submit: addCourse,
+                  title: "New Course",
+                  size: "md",
+                  options: {
+                    categories, universities, teachers
+                  }
+                },
+                dispatch
+              )
+            }
+            size="sm"
+          >
+            Add New Course
         </Button>
-      </Col>
+        </Col>
+      ) : <></>
+      }
       <h5>Courses</h5>
       <hr />
       <Row>

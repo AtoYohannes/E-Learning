@@ -27,28 +27,6 @@ const Courses = ({ doneAdd, doneEdit, courses, enrollments, categories, universi
         dispatch={dispatch}
         title={state.title}
       />
-      <Col align="right" className="newButton">
-        <Button
-          onClick={() =>
-            _toggle(
-              {
-                type: "ADD",
-                Component: CourseForm,
-                submit: () => null,
-                title: "New Course",
-                size: "md",
-                options: {
-                  categories, universities, teachers
-                }
-              },
-              dispatch
-            )
-          }
-          size="sm"
-        >
-          Add New Course
-        </Button>
-      </Col>
       <h5>Courses</h5>
       <hr />
       <Row>

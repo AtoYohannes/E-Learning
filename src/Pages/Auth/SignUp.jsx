@@ -43,7 +43,7 @@ const SignUp = ({
           SetUserDetails(userData)
           setUserID(userData._id)
           UpdateMainBuffer({ studentData })
-          setRedirect("/")
+          window.location.reload()
         })
       })
     })
@@ -61,13 +61,13 @@ const SignUp = ({
           }} />
         }
         <FormGroup>
-          <Label>Full Name</Label>
+          <Label>First Name</Label>
           <Input placeholder="First Name" onChange={({ currentTarget: { value } }) => setUserInfo({
             ...userInfo, firstName: value
           })} />
         </FormGroup>
         <FormGroup>
-          <Label>Full Name</Label>
+          <Label>Last Name</Label>
           <Input placeholder="Last Name" onChange={({ currentTarget: { value } }) => setUserInfo({
             ...userInfo, lastName: value
           })} />

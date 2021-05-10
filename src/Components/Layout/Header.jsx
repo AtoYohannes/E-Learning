@@ -28,7 +28,7 @@ import bn from "../../utils/bemnames";
 import Avatar from "../Avatar";
 import UserCard from "../Card/UserCard";
 import { RenderButton } from "../MainRender";
-import { getAuthentication, DeAuthenticateUser } from "store/States/User"
+import { getAuthentication, DeAuthenticateUser, selectUserContent } from "store/States/User"
 import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
 
@@ -82,6 +82,7 @@ class Header extends React.Component {
     const setRedirect = (redirect) => {
       this.setState({ redirect })
     }
+    console.log("image", this.props.userContent.userData.image)
 
     return this.state.redirect.length > 0? <Redirect to={this.state.redirect} /> : (
       <>
@@ -163,6 +164,17 @@ class Header extends React.Component {
                     }}
                   />
                 </NavLink>
+                <NavLink>
+                <RenderButton
+                    title={"Home"}
+                    outline
+                    color="dark"
+                    id="AboutPopover"
+                    onClick={() => {
+                      setRedirect("/")
+                    }}
+                  />
+                </NavLink>
               </NavItem>
               {/* {
                 !this.props.isAuthenticated ? (
@@ -203,6 +215,7 @@ class Header extends React.Component {
                   <Avatar
                     onClick={this.toggleUserCardPopover}
                     className="can-click"
+                    src={this.props.userContent.userData.image}
                   />
                 </NavLink>
                 <Popover
@@ -215,9 +228,10 @@ class Header extends React.Component {
                 >
                   <PopoverBody className="p-0 border-0">
                     <UserCard
-                      title="Fasil Minale"
-                      subtitle="FasilMinale@gmail.com"
+                      title={this.props.userContent.userData.firstName + " " + this.props.userContent.userData.firstName}
+                      subtitle={this.props.userContent.userData.email}
                       className="border-light"
+                      avatar={this.props.userContent.userData.image}
                     >
                       <ListGroup flush>
                         <Link to={{ pathname: routes.profile }}>
@@ -298,7 +312,8 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: getAuthentication(state)
+  isAuthenticated: getAuthentication(state),
+  userContent: selectUserContent(state)
 })
 
 const mapDispatchToProps = dispatch => ({

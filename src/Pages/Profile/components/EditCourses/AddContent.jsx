@@ -1,21 +1,7 @@
-import { Button } from "reactstrap";
 import Joi from "joi-browser";
 import React from "react";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Col,
-  Form,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import { Button, Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 import ParentForm from "../../../../common/form";
-import { UploadImage } from "services/UploadImgage"
 
 class AddContent extends ParentForm {
   constructor(props) {
@@ -82,11 +68,11 @@ class AddContent extends ParentForm {
   async doSubmit() {
     const { data } = this.state;
     // await UploadImage(this.state.file, (fileAddress) => {
-      this.props.submit({
-        ...this.state.data,
-        // contentData: fileAddress
-        contentData: "https://www.youtube.com/watch?v=FHH6hIc2GyE"
-        })
+    this.props.submit({
+      ...this.state.data,
+      // contentData: fileAddress
+      contentData: "https://www.youtube.com/watch?v=FHH6hIc2GyE",
+    });
     // })
   }
 
@@ -102,15 +88,21 @@ class AddContent extends ParentForm {
         <CardBody className="bg-background ">
           <Form onSubmit={this.handleSubmit}>
             <Row>
-              {false?
-                <image src={this.state.data.contentData} /> :
-                <input type="file" onChange={async (event) => {
-                  // this.setState({ file })
-                  const { name, files } = event.target;
-                  this.setState({ contentData: URL.createObjectURL(files[0]) })
-                  this.setState({ file: files[0] })
-                }} />
-              }
+              {false ? (
+                <image src={this.state.data.contentData} />
+              ) : (
+                <input
+                  type="file"
+                  onChange={async (event) => {
+                    // this.setState({ file })
+                    const { name, files } = event.target;
+                    this.setState({
+                      contentData: URL.createObjectURL(files[0]),
+                    });
+                    this.setState({ file: files[0] });
+                  }}
+                />
+              )}
               <Col md={4} sm={6} xs={12}>
                 {this.renderInput({
                   name: "title",
@@ -121,11 +113,11 @@ class AddContent extends ParentForm {
                 {this.renderSelect({
                   name: "chapterID",
                   label: "Chapter",
-                  options: this.props.options.chapters.map(chapter => ({
+                  options: this.props.options.chapters.map((chapter) => ({
                     ...chapter,
-                    name: chapter.title
+                    name: chapter.title,
                   })),
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
               <Col md={4} sm={6} xs={12}>
@@ -137,22 +129,20 @@ class AddContent extends ParentForm {
                     { _id: "PDF", name: "PDF" },
                     { _id: "CONTENT", name: "Content" },
                   ],
-                  optionsFrom: "server"
+                  optionsFrom: "server",
                 })}
               </Col>
-              {
-                this.state.data.contentType === "CONTENT" ? (
-                  <Col md={4} sm={6} xs={12}>
-                    {this.renderInput({
-                      name: "contentData",
-                      label: "Content Data",
-                      type: "textarea"
-                    })}
-                  </Col>
-                ) : (
-                  <></>
-                )
-              }
+              {this.state.data.contentType === "CONTENT" ? (
+                <Col md={4} sm={6} xs={12}>
+                  {this.renderInput({
+                    name: "contentData",
+                    label: "Content Data",
+                    type: "textarea",
+                  })}
+                </Col>
+              ) : (
+                <></>
+              )}
               <Col md={4} sm={6} xs={12}>
                 {this.renderCheckbox({
                   name: "isMandatory",
@@ -163,7 +153,7 @@ class AddContent extends ParentForm {
                 {this.renderInput({
                   name: "timeRequiredInMinutes",
                   label: "Time Required in Minutes",
-                  type: "number"
+                  type: "number",
                 })}
               </Col>
             </Row>
@@ -176,7 +166,9 @@ class AddContent extends ParentForm {
                 size="sm"
                 className="pr-3 pl-3 buttons"
                 onClick={() => this.doSubmit()}
-              >Work</Button>
+              >
+                Work
+              </Button>
             </CardFooter>
           </Form>
         </CardBody>

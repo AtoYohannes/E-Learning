@@ -2,6 +2,7 @@ import Joi from "joi-browser";
 import React from "react";
 import { Button, Card, CardBody, CardFooter, Col, Form, Row } from "reactstrap";
 import ParentForm from "../../../../common/form";
+import { UploadImage } from "services/UploadImgage"
 
 class AddContent extends ParentForm {
   constructor(props) {

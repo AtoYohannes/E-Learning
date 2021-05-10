@@ -67,13 +67,12 @@ class AddContent extends ParentForm {
 
   async doSubmit() {
     const { data } = this.state;
-    // await UploadImage(this.state.file, (fileAddress) => {
-    this.props.submit({
-      ...this.state.data,
-      // contentData: fileAddress
-      contentData: "https://www.youtube.com/watch?v=FHH6hIc2GyE",
-    });
-    // })
+    await UploadImage(this.state.file, (fileAddress) => {
+      this.props.submit({
+        ...this.state.data,
+        contentData: fileAddress
+      });
+    })
   }
 
   handleImageDrop = (image) => {
